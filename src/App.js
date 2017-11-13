@@ -5,7 +5,9 @@ import Register from './Components/Register';
 import Login from './Components/Login';
 import Home from './Components/Home';
 import Rcon from './Components/resend_confirmation';
-import Verify from './Components/Verify';
+import VerifyEmail from './Components/Verify';
+import ForgotPassword from './Components/Forgotpassword';
+import ResetPassword from './Components/Reset';
 import './App.css';
 
 class App extends Component {
@@ -19,8 +21,10 @@ class App extends Component {
         <Route exact={true} path="/" component={Home} />
         <Route path="/register/" component={Register} />
         <Route path="/login/" component={Login} />
-        <Route path="/resend_confrimation/" component={Rcon} />
-        <Route path="/verify/" component={Verify} />
+        <Route path="/resend_confirmation/" component={Rcon} />
+        <Route path="/verify/:token" component={VerifyEmail} />
+        <Route path="/forgot_password/" component={ForgotPassword} />
+        <Route path="/auth/reset_password/:token" component={ResetPassword} />
         </Switch>
       </div>
     );

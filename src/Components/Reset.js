@@ -5,21 +5,35 @@ import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
 
-class VerifyEmail extends Component {
+class ResetPassword extends Component {
   constructor(props) {
     super(props);
-    this.state = { success: false, failure: false, message: '' };
-    this.emailVerify = this.emailVerify.bind(this)
+    this.state = { password:'', cpassword:'', success: false, failure: false, message: '' };
+    this.emailVerify = this.resetPassword.bind(this)
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.onInputChange = this.onInputChange.bind(this);
   }
-  componentDidMount() {
-    this.emailVerify( this.props.match.params.token );
+  onInputChange(evt) {
+      evt.preventDefault();
+      let fields = {};
+      fields[evt.target.name] = evt.target.value;
+      this.setState(fields);
   }
-  emailVerify(token) {
+  handleSubmit(evt) {
+    evt.preventDefault();
+    this.resetPassword( this.props.match.params.token, this.state.password)
+  }
+  resetPassword(token, password) {
     var self = this;
-    const url = 'https://fancy-shoppinglist-api.herokuapp.com/verify/' + token;
+    var data = { "password": password }
+    const url = 'https://fancy-shoppinglist-api.herokuapp.com/auth/reset_password/' + token;
     axios({
-        method: "get",
-        url: url
+        method: "post",
+        url: url,
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        data: data
     }).then(function (response) {
         if (!response.statusText === 'OK') {
             toast.error(response.data.message)
@@ -51,9 +65,7 @@ class VerifyEmail extends Component {
         <div>
           <NavHome />
           <ToastContainer hideProgressBar={true} />
-          {
-              <Redirect to="/login/" />
-          }
+          <Redirect to="/login/" />
         </div>
       );
     }
@@ -63,8 +75,8 @@ class VerifyEmail extends Component {
           <div>
             <NavHome />
             <ToastContainer hideProgressBar={true} />
-            <h3>Invalid link please click below to resend confirmation link</h3>
-            <a href="/resend_confirmation/">Resend confirmation</a>
+            <h3>Invalid link please click below to resend reset link</h3>
+            <a href="/forgot_password/">Resend reset link</a>
           </div>
         );
       }
@@ -73,10 +85,20 @@ class VerifyEmail extends Component {
       <div className="">
         <NavHome />
         <ToastContainer hideProgressBar={true} />
-        <h1>Confirming account....</h1>
+        <div className="col-lg-12">
+            <h2 className="text-info">Reset password</h2>
+            <form className="form" onSubmit={this.handleSubmit}>
+              <div className="form-group col-lg-4 col-lg-offset-4 col-xs-6 col-xs-offset-3 col-md-4 col-md-offset-4">
+              <input type="password" className="form-control" name="password" value={this.state.password} onChange={this.onInputChange} placeholder="New password" required /><br />
+              <input type="password" className="form-control" name="cpassword" value={this.state.cpassword} onChange={this.onInputChange} placeholder="Confirm new password" required /><br />
+              <input type="submit" value="Submit" className="btn btn-primary btn-lg btn-block" />
+
+          </div>
+        </form>
+      </div>
       </div>
     );
   }
 }
 
-export default VerifyEmail;
+export default ResetPassword;

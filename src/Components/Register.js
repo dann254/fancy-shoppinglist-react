@@ -90,7 +90,7 @@ class Register extends Component {
           <ToastContainer hideProgressBar={true} />
             you registered successfully confirm your email to continue. <br />
             <i>confirmation link sent to <b>{this.state.email}</b></i> <br /> <br />
-            did not receive email? <a href="/resend_confrimation/">Resend confirmation</a>
+            did not receive email? <a href="/resend_confirmation/">Resend confirmation</a>
           </div>
         );
       }
