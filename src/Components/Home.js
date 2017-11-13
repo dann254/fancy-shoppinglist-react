@@ -5,9 +5,14 @@ import NavHome from './Navhome';
 class Home extends Component {
   render() {
     return (
-      <div className="">
+      <div className="Home">
       <NavHome />
-        This is your home
+        <div className="col-lg-12 text-center custom-content">
+        <h1 className="landing-head"><b>Tired writing your shopping list on paper?</b></h1>
+        <h4 className="text-white">Here is a solution that will make you enjoy your experience with shopping lists.<br /> It even allows you to share your lists.<br /> How amazing!</h4>
+        <a href="/register/" className="btn btn-lg bb">Sign Up</a>
+        <a href="/login/" className="btn bb2 btn-lg">Login</a>
+      </div>
       </div>
     );
   }

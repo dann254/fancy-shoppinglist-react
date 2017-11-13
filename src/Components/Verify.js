@@ -48,7 +48,7 @@ class VerifyEmail extends Component {
   render() {
     if (this.state.success) {
       return (
-        <div>
+        <div className="">
           <NavHome />
           <ToastContainer hideProgressBar={true} />
           {
@@ -60,7 +60,7 @@ class VerifyEmail extends Component {
     if (this.state.failure) {
       if (this.state.message === 'Invalid token.') {
         return (
-          <div>
+          <div className="">
             <NavHome />
             <ToastContainer hideProgressBar={true} />
             <h3>Invalid link please click below to resend confirmation link</h3>

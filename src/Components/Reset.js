@@ -62,7 +62,7 @@ class ResetPassword extends Component {
   render() {
     if (this.state.success) {
       return (
-        <div>
+        <div className="">
           <NavHome />
           <ToastContainer hideProgressBar={true} />
           <Redirect to="/login/" />
@@ -72,7 +72,7 @@ class ResetPassword extends Component {
     if (this.state.failure) {
       if (this.state.message === 'Invalid token.') {
         return (
-          <div>
+          <div className="">
             <NavHome />
             <ToastContainer hideProgressBar={true} />
             <h3>Invalid link please click below to resend reset link</h3>

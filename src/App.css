@@ -1,3 +1,79 @@
+body, html {
+    height: 100%;
+}
+.bg {
+    /* The image used */
+    background-image: url("./bg.jpg");
+
+    /* Full height */
+    height: 100%;
+
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    overflow:auto;
+}
 .btn {
   cursor: pointer;
+}
+#root{
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  background: rgba(0,0,0,0.65)
+}
+.navbar {
+  margin: 0;
+  border-radius: 0;
+  background-color: black;
+  border-bottom: solid;
+  border-bottom-color: cyan;
+  border-bottom-width: 1px;
+}
+.b{
+  color:cyan !important;
+}
+.b:hover{
+  color:white !important;
+}
+.navbar-brand {
+  font-family: "Comic Sans MS", cursive, sans-serif;
+  font-weight: 800;
+}
+.Home {
+  height: 100%;
+}
+.custom-content{
+  padding-top: 12%;
+}
+.login {
+  vertical-align: center;
+}
+.landing-head{
+  font-family: "Comic Sans MS", cursive, sans-serif;
+  color: cyan;
+}
+.text-white {
+  color: white;
+}
+.bb {
+  background: rgba(0,0,0,.7);
+  border-width:medium;
+  border-color: cyan;
+  color: white;
+  width: 100px;
+  margin: 15px;
+}
+.bb2{
+  background: rgba(0,0,0,.7);
+  border-width:medium;
+  border-color: white;
+  color: cyan;
+  width: 100px;
+  margin: 15px;
+}
+.bb:hover,.bb2:hover {
+  color:lime;
+  border-color: lime;
 }

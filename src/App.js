@@ -8,15 +8,13 @@ import Rcon from './Components/resend_confirmation';
 import VerifyEmail from './Components/Verify';
 import ForgotPassword from './Components/Forgotpassword';
 import ResetPassword from './Components/Reset';
+import Dashboard from './Components/dashboard';
 import './App.css';
 
 class App extends Component {
   render() {
     return (
-      <div>
-        {
-          // App entry point
-        }
+      <div className="null">
         <Switch>
         <Route exact={true} path="/" component={Home} />
         <Route path="/register/" component={Register} />
@@ -25,6 +23,7 @@ class App extends Component {
         <Route path="/verify/:token" component={VerifyEmail} />
         <Route path="/forgot_password/" component={ForgotPassword} />
         <Route path="/auth/reset_password/:token" component={ResetPassword} />
+        <Route path="/dashboard/" component={Dashboard} />
         </Switch>
       </div>
     );
