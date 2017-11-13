@@ -65,15 +65,8 @@ body, html {
   width: 100px;
   margin: 15px;
 }
-.bb2{
-  background: rgba(0,0,0,.7);
-  border-width:medium;
-  border-color: white;
-  color: cyan;
-  width: 100px;
-  margin: 15px;
-}
 .bb:hover,.bb2:hover {
-  color:lime;
-  border-color: lime;
+  background: rgba(0,255,255,.3);
+  color:white;
+  border-color: cyan;
 }
