@@ -7,34 +7,47 @@ import 'react-toastify/dist/ReactToastify.min.css';
 class ForgotPassword extends Component {
   constructor(props) {
         super(props);
-        this.state = { email: '', success: false };
-        this.handleSubmit = this.handleSubmit.bind(this);
-        this.onInputChange = this.onInputChange.bind(this);
-        this.validate = this.validate.bind(this);
+        this.state = { email: '', success: false, errors: {email:''} };
     }
 
-    onInputChange(evt) {
+    onInputChange = (evt) => {
         evt.preventDefault();
         let fields = {};
         fields[evt.target.name] = evt.target.value;
         this.setState(fields);
-    }
-    handleSubmit(evt) {
-        evt.preventDefault();
+        this.setState({ errors: { ...this.state.errors, [Object.keys(fields)[0]]: "" },});
         var errors = '';
-        errors = this.validate(this.state.email)
+        errors = this.validate(fields)
         if (errors) {
-            toast.error(errors)
-            return this.setState({ errors })
+            return this.setState({ errors: { ...this.state.errors, [Object.keys(fields)[0]]: errors },});
         }
-        this.sendRequest(this.state.email, this.state.username, this.state.password);
 
-        //this.setState({ username: '', email: '', password: '', cpassword: '' });
     }
-    validate(email) {
+
+    validate = (fields) => {
         var errors = '';
-        return errors
+        if (fields.email) {
+          var eml = fields.email
+          // Regular expression to validate username
+          var re0 = /^[a-z0-9]+[@]+[a-z0-9]+[.]+[a-z]+$/;
+          var re1 = /^[a-z0-9]+[@]+[a-z0-9]+[.]+[a-z]+[.]+[a-z]+$/;
+          var re2 = /^[a-z0-9]+[.]+[a-z0-9]+[@]+[a-z0-9]+[.]+[a-z]+$/;
+          var re3 = /^[a-z0-9]+[.]+[a-z0-9]+[@]+[a-z0-9]+[.]+[a-z]+$/;
+          if (!eml.match(re0) && !eml.match(re1) && !eml.match(re2)&& !eml.match(re3)) {
+              errors = "invalid email";
+              return errors;
+          }
+        }
     }
+    handleSubmit = (evt) => {
+      evt.preventDefault();
+      if (this.state.errors.email !== '') {
+        toast.error("Please enter a valid email adress")
+      }else{
+      this.sendRequest(this.state.email);
+      }
+    }
+
     sendRequest(email) {
       var self =this;
         var data = { "email": email }
@@ -72,15 +85,31 @@ class ForgotPassword extends Component {
         });
     }
   render() {
+    if (this.state.success) {
+      return (
+        <div>
+        <NavHome />
+        <ToastContainer hideProgressBar={true} />
+        <div className="f-success">
+          <h1 className="f-big">Link sent.</h1>
+          <h3 className="f-info" >Click the sent link to reset your password. <br />
+          Reset link sent to : <b className="f-label">{this.state.email}.</b> <br /> <br /> </h3>
+          <h4 className="f-info"> Did not receive email? <a href="/forgot_password/" className="f-link">Resend reset link.</a></h4>
+          <h4 className="f-info"> Ready to login? <a href="/login/" className="f-link">Login.</a></h4>
+        </div>
+        </div>
+      );
+    }
     return (
       <div className="">
       <NavHome />
       <ToastContainer hideProgressBar={true} />
-      <h3>please enter your email adress to receive reset password link</h3>
+      <h3 className="f-head text-center">please enter your email adress to recieve reset password link</h3>
       <form className="form" onSubmit={this.handleSubmit}>
       <div className="form-group col-lg-4 col-lg-offset-4 col-xs-6 col-xs-offset-3 col-md-4 col-md-offset-4">
-        <input type="email" className="form-control" name="email" value={this.state.email} onChange={this.onInputChange} placeholder="Confirmation email" required /><br />
-        <input type="submit" value="Submit" className="btn btn-primary btn-lg btn-block" />
+        <label className="f-label"> Email: <span className="text-err">{ this.state.errors.email }</span></label>
+        <input type="email" className={this.state.errors.email ? "form-control f-error":"form-control" } name="email" value={this.state.email} onInput={this.onInputChange} placeholder="email" required /><br />
+        <input type="submit" value="Submit" className="btn btn-primary btn-lg btn-block f-submit" />
         </div>
       </form>
       </div>
