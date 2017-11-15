@@ -70,3 +70,45 @@ body, html {
   color:white;
   border-color: cyan;
 }
+.text-err {
+  color: #ff4d4d;
+  background: rgba(0,0,0,.3);
+}
+.f-error {
+  border-bottom: 1px solid red;
+  box-shadow: 1px 1px red;
+}
+.f-label {
+  color : cyan;
+}
+.f-submit {
+  background: rgba(0,0,0,.7);
+  border-width:medium;
+  border-color: cyan;
+  color: white;
+  width: 100px;
+}
+.f-submit:hover {
+  background: rgba(0,255,255,.2);
+  color:white;
+  border-color: cyan;
+}
+.f-head{
+  color : cyan;
+  font-family: "Comic Sans MS", cursive, sans-serif;
+}
+.f-success {
+  padding-top: 8%;
+  text-align: center;
+}
+.f-big {
+  color: cyan;
+  font-family: "Comic Sans MS", cursive, sans-serif;
+}
+.f-info {
+  color: White;
+  font-family: "Comic Sans MS", cursive, sans-serif;
+}
+.f-link {
+  color: turquoise;
+}

@@ -11,9 +11,8 @@ class ResetPassword extends Component {
     this.state = { password:'', cpassword:'', success: false, failure: false, message: '' };
     this.emailVerify = this.resetPassword.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.onInputChange = this.onInputChange.bind(this);
   }
-  onInputChange(evt) {
+  onInputChange = (evt) => {
       evt.preventDefault();
       let fields = {};
       fields[evt.target.name] = evt.target.value;

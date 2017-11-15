@@ -4,51 +4,114 @@ import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
 
+
 class Register extends Component {
   constructor(props) {
         super(props);
-        this.state = { username: '', email: '', password: '', cpassword: '', errors: '', success: false };
-        this.handleSubmit = this.handleSubmit.bind(this);
-        this.onInputChange = this.onInputChange.bind(this);
-        this.validate = this.validate.bind(this);
+        this.state = { username: '', email: '', password: '',xemails:[],xusernames:[], cpassword: '', errors: { username: '',email:'', password:'', cpassword:'' }, success: true };
     }
-
-    onInputChange(evt) {
+    componentDidMount = () => {
+      var self =this;
+      const url = 'https://fancy-shoppinglist-api.herokuapp.com/users/AESDxsdgfhbcsdsd';
+      axios({
+          method: "get",
+          url: url
+      }).then(function (response) {
+          self.setState({ xusernames : response.data.result.usernames})
+          self.setState({ xemails : response.data.result.emails})
+          return response.data;
+      }).catch(function (error) {
+          if (error.response) {
+              console.log(error.response.data);
+          } else if (error.request) {
+              console.log(error.request);
+          } else {
+              console.log('Error', error.message);
+          }
+          console.log(error.config);
+      });
+    }
+    onInputChange = (evt)=> {
         evt.preventDefault();
         let fields = {};
         fields[evt.target.name] = evt.target.value;
         this.setState(fields);
-    }
-    handleSubmit(evt) {
-        evt.preventDefault();
+        this.setState({ errors: { ...this.state.errors, [Object.keys(fields)[0]]: "" },});
         var errors = '';
-        errors = this.validate(this.state.username, this.state.email, this.state.password, this.state.cpassword)
+        errors = this.validate(fields)
         if (errors) {
-            toast.error(errors)
-            return this.setState({ errors })
+            return this.setState({ errors: { ...this.state.errors, [Object.keys(fields)[0]]: errors },});
         }
-        this.sendRequest(this.state.email, this.state.username, this.state.password);
-
-        //this.setState({ username: '', email: '', password: '', cpassword: '' });
     }
-    validate(username, email, password, cpassword) {
+    validate = (fields) => {
         var errors = '';
-        if (password !== cpassword) {
-            errors = "Password mismatch";
+        // username validation
+        if (fields.username) {
+          var usn = fields.username
+          if(this.state.xusernames.includes(usn)){
+            errors = "username already exists";
             return errors;
+          }
+          if (usn.length < 3) {
+              errors = "username should be three or more characters long";
+              return errors;
+          }
+          if (usn.length > 30) {
+              errors = "username too long";
+              return errors;
+          }
+          // Regular expression to validate username
+          var re = /^[a-z0-9_]+$/;
+          if (!usn.match(re)) {
+              errors = "invalid username";
+              return errors;
+          }
         }
-        // Regular expression to check for special characters
-        var re = /[a-z]|[A-Z]|[0-9]|_/;
-        // console.log(re.test(username))
-        if (!re.test(username)) {
-            errors = "Username cannot have special characters";
+
+        if (fields.email) {
+          var eml = fields.email
+          if(this.state.xemails.includes(eml)){
+            errors = "Email already exists";
             return errors;
+          }
+          // Regular expression to validate username
+          var re0 = /^[a-z0-9]+[@]+[a-z0-9]+[.]+[a-z]+$/;
+          var re1 = /^[a-z0-9]+[@]+[a-z0-9]+[.]+[a-z]+[.]+[a-z]+$/;
+          var re2 = /^[a-z0-9]+[.]+[a-z0-9]+[@]+[a-z0-9]+[.]+[a-z]+$/;
+          var re3 = /^[a-z0-9]+[.]+[a-z0-9]+[@]+[a-z0-9]+[.]+[a-z]+$/;
+          if (!eml.match(re0) && !eml.match(re1) && !eml.match(re2)&& !eml.match(re3)) {
+              errors = "invalid email";
+              return errors;
+          }
         }
+        if (fields.password) {
+          var psw = fields.password
+          if (psw.length < 6) {
+              errors = "password should not be less than 6 characters long.";
+              return errors;
+          }
+        }
+        if (fields.cpassword) {
+          var psw2 = fields.cpassword
+          if (psw2 !== this.state.password) {
+              errors = "passwords do not match";
+              return errors;
+          }
+        }
+    }
+    handleSubmit = (evt) => {
+        evt.preventDefault();
+        if (this.state.errors.username !== '' && this.state.errors.email !== '' && this.state.errors.password !== '' && this.state.errors.cpassword !== '') {
+          toast.error("Please enter valid values for each field")
+        }else{
+
+          this.sendRequest(this.state.email, this.state.username, this.state.password);
+        }
+
     }
     sendRequest(email, username, password) {
       var self =this;
         var data = { "email": email, "username": username, "password": password }
-        // const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
         const url = 'https://fancy-shoppinglist-api.herokuapp.com/auth/register/';
         axios({
             method: "post",
@@ -61,21 +124,18 @@ class Register extends Component {
             if (!response.statusText === 'OK') {
                 toast.error(response.data.message)
             }
-            console.log(response.data);
             toast.success(response.data.message);
             self.setState({ success: true })
             return response.data;
         }).catch(function (error) {
             if (error.response) {
-                // The request was made and the server responded with a status code
-                // that falls out of the range of 2xx
                 console.log(error.response.data);
                 toast.error(error.response.data.message)
             } else if (error.request) {
-                // The request was made but no response was received
+                // No response received
                 console.log(error.request);
             } else {
-                // Something happened in setting up the request that triggered an Error
+                // Request error
                 console.log('Error', error.message);
             }
             console.log(error.config);
@@ -88,27 +148,34 @@ class Register extends Component {
           <div>
           <NavHome />
           <ToastContainer hideProgressBar={true} />
-            you registered successfully confirm your email to continue. <br />
-            <i>confirmation link sent to <b>{this.state.email}</b></i> <br /> <br />
-            did not receive email? <a href="/resend_confirmation/">Resend confirmation</a>
+          <div className="f-success">
+            <h1 className="f-big">Yaaayyy!! thank you for registering.</h1>
+            <h3 className="f-info" >You now need confirm your email to continue. <br />
+            Confirmation link sent to : <b className="f-label">{this.state.email}.</b> <br /> <br /> </h3>
+            <h4 className="f-info"> Did not receive email? <a href="/resend_confirmation/" className="f-link">Resend confirmation.</a></h4>
+            <h4 className="f-info"> Already confirmed? <a href="/login/" className="f-link">Login.</a></h4>
+          </div>
           </div>
         );
       }
     //}, 1000);
-
     return (
       <div className="">
       <NavHome />
       <ToastContainer hideProgressBar={true} />
-        <div className="col-lg-12">
-            <h2 className="text-info">Signup</h2>
+        <div className="col-lg-12 pre-forms">
+            <h2 className="f-head text-center">Signup</h2>
             <form className="form" onSubmit={this.handleSubmit}>
               <div className="form-group col-lg-4 col-lg-offset-4 col-xs-6 col-xs-offset-3 col-md-4 col-md-offset-4">
-              <input type="text" className="form-control" name="username" value={this.state.username} onChange={this.onInputChange} placeholder="Username" required /><br />
-              <input type="email" className="form-control" name="email" value={this.state.email} onChange={this.onInputChange} placeholder="email" required /><br />
-              <input type="password" className="form-control" name="password" value={this.state.password} onChange={this.onInputChange} placeholder="Password" required /><br />
-              <input type="password" className="form-control" name="cpassword" value={this.state.cpassword} onChange={this.onInputChange} placeholder="Confirm Password" required /><br />
-              <input type="submit" value="Submit" className="btn btn-primary btn-lg btn-block" />
+              <label className="f-label"> Username: <span className="text-err">{ this.state.errors.username }</span></label>
+              <input type="text" className={this.state.errors.username ? "form-control f-error":"form-control" } name="username" value={this.state.username} onInput={this.onInputChange} placeholder="Username" required /><br />
+              <label className="f-label"> Email: <span className="text-err">{ this.state.errors.email }</span></label>
+              <input type="email" className={this.state.errors.email ? "form-control f-error":"form-control" } name="email" value={this.state.email} onChange={this.onInput} onInput={this.onInputChange} placeholder="email" required /><br />
+              <label className="f-label"> Password: <span className="text-err">{ this.state.errors.password }</span></label>
+              <input type="password" className={this.state.errors.password ? "form-control f-error":"form-control" } name="password" value={this.state.password} onChange={this.onInputChange} placeholder="Password" required /><br />
+              <label className="f-label"> Confirm password: <span className="text-err">{ this.state.errors.cpassword }</span></label>
+              <input type="password" className={this.state.errors.cpassword ? "form-control f-error":"form-control" } name="cpassword" value={this.state.cpassword} onChange={this.onInputChange} placeholder="Confirm Password" required /><br />
+              <input type="submit" value="Submit" className="btn btn-primary btn-lg btn-block f-submit" />
 
           </div>
         </form>
