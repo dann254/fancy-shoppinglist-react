@@ -170,11 +170,11 @@ class Register extends Component {
               <label className="f-label"> Username: <span className="text-err">{ this.state.errors.username }</span></label>
               <input type="text" className={this.state.errors.username ? "form-control f-error":"form-control" } name="username" value={this.state.username} onInput={this.onInputChange} placeholder="Username" required /><br />
               <label className="f-label"> Email: <span className="text-err">{ this.state.errors.email }</span></label>
-              <input type="email" className={this.state.errors.email ? "form-control f-error":"form-control" } name="email" value={this.state.email} onChange={this.onInput} onInput={this.onInputChange} placeholder="email" required /><br />
+              <input type="email" className={this.state.errors.email ? "form-control f-error":"form-control" } name="email" value={this.state.email} onInput={this.onInputChange} placeholder="email" required /><br />
               <label className="f-label"> Password: <span className="text-err">{ this.state.errors.password }</span></label>
-              <input type="password" className={this.state.errors.password ? "form-control f-error":"form-control" } name="password" value={this.state.password} onChange={this.onInputChange} placeholder="Password" required /><br />
+              <input type="password" className={this.state.errors.password ? "form-control f-error":"form-control" } name="password" value={this.state.password} onInput={this.onInputChange} placeholder="Password" required /><br />
               <label className="f-label"> Confirm password: <span className="text-err">{ this.state.errors.cpassword }</span></label>
-              <input type="password" className={this.state.errors.cpassword ? "form-control f-error":"form-control" } name="cpassword" value={this.state.cpassword} onChange={this.onInputChange} placeholder="Confirm Password" required /><br />
+              <input type="password" className={this.state.errors.cpassword ? "form-control f-error":"form-control" } name="cpassword" value={this.state.cpassword} onInput={this.onInputChange} placeholder="Confirm Password" required /><br />
               <input type="submit" value="Submit" className="btn btn-primary btn-lg btn-block f-submit" />
 
           </div>
