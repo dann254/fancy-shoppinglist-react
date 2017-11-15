@@ -90,6 +90,10 @@ class Register extends Component {
               errors = "password should not be less than 6 characters long.";
               return errors;
           }
+          if (this.state.cpassword !== '' && psw !== this.state.cpassword) {
+            errors = "passwords do not match";
+            return errors;
+          }
         }
         if (fields.cpassword) {
           var psw2 = fields.cpassword
@@ -101,7 +105,7 @@ class Register extends Component {
     }
     handleSubmit = (evt) => {
         evt.preventDefault();
-        if (this.state.errors.username !== '' && this.state.errors.email !== '' && this.state.errors.password !== '' && this.state.errors.cpassword !== '') {
+        if (this.state.errors.username !== '' || this.state.errors.email !== '' || this.state.errors.password !== '' || this.state.errors.cpassword !== '') {
           toast.error("Please enter valid values for each field")
         }else{
 
