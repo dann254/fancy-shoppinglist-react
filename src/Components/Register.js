@@ -8,7 +8,7 @@ import 'react-toastify/dist/ReactToastify.min.css';
 class Register extends Component {
   constructor(props) {
         super(props);
-        this.state = { username: '', email: '', password: '',xemails:[],xusernames:[], cpassword: '', errors: { username: '',email:'', password:'', cpassword:'' }, success: true };
+        this.state = { username: '', email: '', password: '',xemails:[],xusernames:[], cpassword: '', errors: { username: '',email:'', password:'', cpassword:'' }, success: false };
     }
     componentDidMount = () => {
       var self =this;
