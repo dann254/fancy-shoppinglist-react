@@ -112,3 +112,7 @@ body, html {
 .f-link {
   color: turquoise;
 }
+.f-link:hover {
+  color: lime;
+  text-decoration: none;
+}

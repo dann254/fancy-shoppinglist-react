@@ -13,7 +13,11 @@ class Login extends Component {
         this.onInputChange = this.onInputChange.bind(this);
         this.validate = this.validate.bind(this);
     }
-
+    componentDidMount=() => {
+      if (this.props.location.state.msg) {
+        toast.success(this.props.location.state.msg)
+      }
+    }
     onInputChange(evt) {
         evt.preventDefault();
         let fields = {};

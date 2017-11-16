@@ -9,7 +9,6 @@ class VerifyEmail extends Component {
   constructor(props) {
     super(props);
     this.state = { success: false, failure: false, message: '' };
-    this.emailVerify = this.emailVerify.bind(this)
   }
   componentDidMount() {
     this.emailVerify( this.props.match.params.token );
@@ -51,9 +50,10 @@ class VerifyEmail extends Component {
         <div className="">
           <NavHome />
           <ToastContainer hideProgressBar={true} />
-          {
-              <Redirect to="/login/" />
-          }
+          <Redirect push to={{
+            pathname: '/login/',
+            state : {msg:this.state.message}
+          }}/>
         </div>
       );
     }
