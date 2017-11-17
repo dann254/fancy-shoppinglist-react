@@ -93,6 +93,11 @@ body, html {
   color:white;
   border-color: cyan;
 }
+.f-submit:click {
+  background: rgba(0,255,255,.2);
+  color:white;
+  border-color: cyan;
+}
 .f-head{
   color : cyan;
   font-family: "Comic Sans MS", cursive, sans-serif;
@@ -115,4 +120,57 @@ body, html {
 .f-link:hover {
   color: lime;
   text-decoration: none;
+}
+@keyframes slidein {
+  from {
+    margin-left: 100%;
+    width: 300%;
+  }
+
+  to {
+    margin-left: 0%;
+    width: 100%;
+  }
+}
+@keyframes i-info {
+    from {background:rgba(0, 255, 255, 1);}
+    to {background:rgba(0, 255, 255, .5);}
+}
+.i-container {
+  background:rgba(0, 255, 255, 1);
+  color: black;
+  font-weight: bold;
+  font-family: "Comic Sans MS", cursive, sans-serif;
+  box-shadow: 0px 3px 10px 3px rgba(0, 255, 255, .75);
+  border-bottom: 2px solid cyan;
+  border-right: 2px solid cyan;
+  border-left: 2px solid cyan;
+  border-top: 0px solid cyan;
+  text-align: center;
+  animation-name: i-info;
+  animation-duration: 1s;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+  /*animation-fill-mode:both;*/
+  /*animation-timing-function: ease-in-out;*/
+}
+.i-c{
+  animation-name: slidein;
+  animation-duration: 2s;
+  animation-iteration-count: 1;
+  /*animation-direction: alternate;*/
+}
+.i-submit {
+  background: rgba(0,0,0,.7);
+  border-width:medium;
+  border: 1px solid;
+  border-color: cyan;
+  color: white;
+  width: 100px;
+}
+.i-submit:hover {
+  background: rgba(0,0,0,1);
+  color:white;
+  border: 1px solid;
+  border-color: white;
 }

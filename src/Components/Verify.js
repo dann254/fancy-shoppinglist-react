@@ -25,7 +25,7 @@ class VerifyEmail extends Component {
         }
         console.log(response.data);
         toast.success(response.data.message);
-        self.setState({ success: true })
+        self.setState({ success: true, message: response.data.message })
         return response.data;
     }).catch(function (error) {
         if (error.response) {
@@ -63,8 +63,10 @@ class VerifyEmail extends Component {
           <div className="">
             <NavHome />
             <ToastContainer hideProgressBar={true} />
-            <h3>Invalid link please click below to resend confirmation link</h3>
-            <a href="/resend_confirmation/">Resend confirmation</a>
+            <div className="f-success">
+            <h3 className="f-big">Invalid link please click below to resend confirmation link</h3>
+            <h4><a href="/resend_confirmation/" className="f-link">Resend confirmation</a></h4>
+            </div>
           </div>
         );
       }
@@ -73,7 +75,7 @@ class VerifyEmail extends Component {
       <div className="">
         <NavHome />
         <ToastContainer hideProgressBar={true} />
-        <h1>Confirming account....</h1>
+        <h1 className="f-success f-big">Confirming account....</h1>
       </div>
     );
   }

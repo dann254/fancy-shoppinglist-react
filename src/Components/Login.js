@@ -8,51 +8,65 @@ import 'react-toastify/dist/ReactToastify.min.css';
 class Login extends Component {
   constructor(props) {
         super(props);
-        this.state = { username: '', password: '', errors: '', redirect: false };
-        this.handleSubmit = this.handleSubmit.bind(this);
-        this.onInputChange = this.onInputChange.bind(this);
-        this.validate = this.validate.bind(this);
+        this.state = { username: '', password: '', errors:  { username: '', password:'' }, redirect: false, failure:false, message:'' };
     }
     componentDidMount=() => {
-      if (this.props.location.state.msg) {
-        toast.success(this.props.location.state.msg)
+      try {
+        if (this.props.location.state.msg) {
+          toast.success(this.props.location.state.msg)
+        }
+      } catch (e) {
+
       }
     }
-    onInputChange(evt) {
-        evt.preventDefault();
-        let fields = {};
-        fields[evt.target.name] = evt.target.value;
-        this.setState(fields);
+    onInputChange=(evt) => {
+      evt.preventDefault();
+      let fields = {};
+      fields[evt.target.name] = evt.target.value;
+      this.setState(fields);
+      this.setState({ errors: { ...this.state.errors, [Object.keys(fields)[0]]: "" },});
+      var errors = '';
+      errors = this.validate(fields)
+      if (errors) {
+          return this.setState({ errors: { ...this.state.errors, [Object.keys(fields)[0]]: errors },});
+      }
     }
-    handleSubmit(evt) {
-        evt.preventDefault();
-        var errors = '';
-        errors = this.validate(this.state.username, this.state.password)
-        if (errors) {
-            toast.error(errors)
-            return this.setState({ errors })
+    validate=(fields)=> {
+      var errors = '';
+      // username validation
+      if (fields.username) {
+        var usn = fields.username
+        if (usn.length < 3) {
+            errors = "username should be three or more characters long";
+            return errors;
         }
+        if (usn.length > 30) {
+            errors = "username too long";
+            return errors;
+        }
+        // Regular expression to validate username
+        var re = /^[a-z0-9_]+$/;
+        if (!usn.match(re)) {
+            errors = "invalid username";
+            return errors;
+        }
+      }
+      if (fields.password) {
+        var psw = fields.password
+        if (psw.length < 6) {
+            errors = "password should not be less than 6 characters long.";
+            return errors;
+        }
+      }
+    }
+    handleSubmit=(evt)=> {
+        evt.preventDefault();
         this.sendRequest(this.state.username, this.state.password);
 
-    }
-    validate(username, password) {
-        var errors = '';
-        if (!password) {
-            errors = "Password mismatch";
-            return errors;
-        }
-        // Regular expression to check for special characters
-        var re = /[a-z]|[A-Z]|[0-9]|_/;
-        // console.log(re.test(username))
-        if (!re.test(username)) {
-            errors = "Invalid username";
-            return errors;
-        }
     }
     sendRequest(username, password) {
         var self=this;
         var data = { "username": username, "password": password }
-        // const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
         const url = 'https://fancy-shoppinglist-api.herokuapp.com/auth/login/';
         axios({
             method: "post",
@@ -68,19 +82,16 @@ class Login extends Component {
             console.log(response.data);
             toast.success(response.data.message);
             window.localStorage.setItem('token', response.data.access_token);
-            self.setState({ redirect: true })
+            self.setState({ redirect: true, message:response.data.message })
             return response.data;
         }).catch(function (error) {
             if (error.response) {
-                // The request was made and the server responded with a status code
-                // that falls out of the range of 2xx
                 console.log(error.response.data);
+                self.setState({ failure: true, message:error.response.data.message })
                 toast.error(error.response.data.message)
             } else if (error.request) {
-                // The request was made but no response was received
                 console.log(error.request);
             } else {
-                // Something happened in setting up the request that triggered an Error
                 console.log('Error', error.message);
             }
             console.log(error.config);
@@ -88,24 +99,37 @@ class Login extends Component {
     }
   render() {
     if (this.state.redirect) {
-            return <Redirect to="/dashboard/" />
-        }
+      return <Redirect push to={{
+        pathname: '/login/',
+        state : {msg:this.state.message}
+      }}/>
+    }
+    let notice = null;
+    if (this.state.failure && this.state.message === "please verify your email before logging in") {
+        notice = <div className="i-c"><div className="i-container col-lg-4 col-lg-offset-4 col-xs-6 col-xs-offset-3 col-md-4 col-md-offset-4">Click here to verify your email <a href="/resend_confirmation/" className="btn btn-md i-submit">Verify</a></div></div>
+    }
+    if (this.state.failure && this.state.message === "Invalid username or password") {
+        notice = <div className="i-c"><div className="i-container col-lg-4 col-lg-offset-4 col-xs-6 col-xs-offset-3 col-md-4 col-md-offset-4">Dont have an account? <a href="/register/" className="btn btn-md i-submit">Sign Up</a></div></div>
+    }
     return (
       <div className="">
       <NavHome />
       <ToastContainer hideProgressBar={true} />
-      <div className="col-lg-12 login">
-          <h2 className="text-info">Login</h2>
+      {notice}<br /><br />
+      <div className="col-lg-12 login pre-forms">
+          <h2 className="text-center f-head">Login</h2>
           <form className="form" onSubmit={this.handleSubmit}>
             <div className="form-group col-lg-4 col-lg-offset-4 col-xs-6 col-xs-offset-3 col-md-4 col-md-offset-4">
-            <input type="text" className="form-control" name="username" value={this.state.username} onChange={this.onInputChange} placeholder="Username" required /><br /><br />
-            <input type="password" className="form-control" name="password" value={this.state.password} onChange={this.onInputChange} placeholder="Password" required /><br />
-            <input type="submit" value="Login" className="btn btn-primary btn-lg btn-block" />
+            <label className="f-label"> Username</label>
+            <input type="text" className={this.state.errors.username ? "form-control f-error":"form-control" } name="username" value={this.state.username} onInput={this.onInputChange} placeholder="Username" required /><br />
+            <label className="f-label"> Password</label>
+            <input type="password" className={this.state.errors.password ? "form-control f-error":"form-control" } name="password" value={this.state.password} onInput={this.onInputChange} placeholder="Password" required /><br />
+            <input type="submit" value="Login" className="btn btn-primary btn-lg btn-block f-submit" />
 
+            <h4 className=""><a href="/forgot_password/" className="f-link">Forgot password?</a></h4>
             </div>
           </form>
         </div>
-      <a href="/forgot_password/">Forgot password?</a>
       </div>
     );
   }
