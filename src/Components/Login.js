@@ -100,7 +100,7 @@ class Login extends Component {
   render() {
     if (this.state.redirect) {
       return <Redirect push to={{
-        pathname: '/login/',
+        pathname: '/dashboard/',
         state : {msg:this.state.message}
       }}/>
     }
@@ -110,6 +110,13 @@ class Login extends Component {
     }
     if (this.state.failure && this.state.message === "Invalid username or password") {
         notice = <div className="i-c"><div className="i-container col-lg-4 col-lg-offset-4 col-xs-6 col-xs-offset-3 col-md-4 col-md-offset-4">Dont have an account? <a href="/register/" className="btn btn-md i-submit">Sign Up</a></div></div>
+    }
+    try {
+      if (this.props.location.state.msg === 'Your session expired. Please login to continue') {
+        notice = <div className="i-c"><div className="i-container col-lg-4 col-lg-offset-4 col-xs-6 col-xs-offset-3 col-md-4 col-md-offset-4">You have been logged out please login to continue.</div></div>
+      }
+    } catch (e) {
+
     }
     return (
       <div className="">

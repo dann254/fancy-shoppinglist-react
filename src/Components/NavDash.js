@@ -4,16 +4,21 @@ import { Redirect } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
 
-class NavHome extends Component {
+class NavDash extends Component {
   constructor(props) {
     super(props)
-    this.state = {logged_in: false}
+    this.state = { user: '', success: false, message:'', failure:false }
+  }
+  logout = () => {
+      window.localStorage.clear();
+      return this.setState({ failure:true, message: 'Logout successful' })
   }
   componentWillMount=() => {
     if (!window.localStorage.getItem('token')){
-      return this.setState({ logged_in:false })
-    }
+      return this.setState({ failure:true, message: 'Please login to continue' })
+    }else{
     this.getUser();
+  }
   }
   getUser=()=> {
     // Send GET request
@@ -30,16 +35,15 @@ class NavHome extends Component {
            }
            //this.setState({success: true})
            this.setState({
-               logged_in: true
+               user: response.data.username
            });
-
+           window.localStorage.setItem('username', response.data.username);
            return response.data;
        }).catch(function (error) {
            if (error.response) {
              this.setState({
-                 logged_in:false
+                 message: error.response.data.message, failure:true
              });
-             window.localStorage.clear();
            } else if (error.request) {
                // The request was made but no response was received
                console.log(error.request);
@@ -52,11 +56,22 @@ class NavHome extends Component {
   }
 
   render() {
-    if (this.state.logged_in) {
+    if (this.state.failure && this.state.message === 'Expired token. Please login to get a new token' ) {
       return (
         <div className="">
           <Redirect push to={{
-            pathname: '/dashboard/'
+            pathname: '/login/',
+            state : {msg:'Your session expired. Please login to continue'}
+          }}/>
+        </div>
+      );
+    }
+    if (this.state.failure) {
+      return (
+        <div className="">
+          <Redirect push to={{
+            pathname: '/login/',
+            state : {msg:this.state.message}
           }}/>
         </div>
       );
@@ -71,15 +86,13 @@ class NavHome extends Component {
               <span className="icon-bar"></span>
               <span className="icon-bar"></span>
             </button>
-            <a className="b navbar-brand" href="/"> Fancy shoppinglist</a>
+            <a className="b navbar-brand" href="/dashboard/"> Fancy shoppinglist</a>
           </div>
           <div className="collapse navbar-collapse" id="myNavbar">
-            <ul className="nav navbar-nav">
-              <li ><a href="/" className="b"><span className="glyphicon glyphicon-home"></span> Home</a></li>
-            </ul>
+
             <ul className="b2 nav navbar-nav navbar-right">
-              <li><a href="/register/" className="b"><span className="glyphicon glyphicon-user"></span> Sign Up</a></li>
-              <li><a href="/login/" className="b"><span className="glyphicon glyphicon-log-in"></span> Login</a></li>
+              <li><a href="/register/" className="b"><span className="glyphicon glyphicon-user"></span> {window.localStorage.getItem('username')}</a></li>
+              <li><a onClick={this.logout} className="b"><span className="glyphicon glyphicon-log-out"></span> Logout</a></li>
             </ul>
 
           </div>
@@ -90,4 +103,4 @@ class NavHome extends Component {
   }
 }
 
-export default NavHome;
+export default NavDash;

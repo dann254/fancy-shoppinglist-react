@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import NavDash from './NavDash';
 import axios from 'axios';
 import { Redirect } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
@@ -11,6 +12,9 @@ class Dashboard extends Component {
     this.getShoppinglists = this.getShoppinglists.bind(this);
   }
   componentDidMount() {
+    if (!window.localStorage.getItem('token')){
+      return ''
+    }
     this.getShoppinglists();
   }
   getShoppinglists() {
@@ -60,6 +64,8 @@ class Dashboard extends Component {
     // }
     return (
       <div className="">
+        <NavDash />
+        <ToastContainer hideProgressBar={true} />
         this is your dashboard
         {this.state.shoppinglists.map(shoppinglists => {
         return ( <div key={shoppinglists.id}>
