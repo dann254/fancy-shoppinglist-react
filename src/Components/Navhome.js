@@ -12,7 +12,7 @@ class NavHome extends Component {
               <span className="icon-bar"></span>
               <span className="icon-bar"></span>
             </button>
-            <a className="b navbar-brand" href="/">Fancy shoppinglist</a>
+            <a className="b navbar-brand" href="/"> Fancy shoppinglist</a>
           </div>
           <div className="collapse navbar-collapse" id="myNavbar">
             <ul className="nav navbar-nav">

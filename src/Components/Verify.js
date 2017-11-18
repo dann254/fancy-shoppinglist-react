@@ -75,7 +75,11 @@ class VerifyEmail extends Component {
       <div className="">
         <NavHome />
         <ToastContainer hideProgressBar={true} />
-        <h1 className="f-success f-big">Confirming account....</h1>
+        <div id="loader">
+          <div id="box"></div>
+          <div id="hill"></div>
+        </div>
+        <h1 className="f-success f-big">Confirming email....</h1>
       </div>
     );
   }

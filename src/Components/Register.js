@@ -162,11 +162,16 @@ class Register extends Component {
           </div>
         );
       }
+      let notice = null;
+      if (this.state.errors.username === "username already exists" || this.state.errors.email === "Email already exists") {
+          notice = <div className="i-c"><div className="i-container col-lg-4 col-lg-offset-4 col-xs-6 col-xs-offset-3 col-md-4 col-md-offset-4">Already have an account? <a href="/login/" className="btn btn-md i-submit">Login</a></div></div>
+      }
     //}, 1000);
     return (
       <div className="">
       <NavHome />
       <ToastContainer hideProgressBar={true} />
+      {notice}<br /><br />
         <div className="col-lg-12 pre-forms">
             <h2 className="f-head text-center">Signup</h2>
             <form className="form" onSubmit={this.handleSubmit}>

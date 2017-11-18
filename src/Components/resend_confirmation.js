@@ -86,8 +86,8 @@ class Rcon extends Component {
         <NavHome />
         <ToastContainer hideProgressBar={true} />
         <div className="f-success">
-          <h1 className="f-big">Yaaayyy!! thank you for registering.</h1>
-          <h3 className="f-info" >You now need confirm your email to continue. <br />
+          <h1 className="f-big">Success!!.</h1>
+          <h3 className="f-info" >
           Confirmation link sent to : <b className="f-label">{this.state.email}.</b> <br /> <br /> </h3>
           <h4 className="f-info"> Did not receive email? <a href="/resend_confirmation/" className="f-link">Resend confirmation.</a></h4>
           <h4 className="f-info"> Already confirmed? <a href="/login/" className="f-link">Login.</a></h4>
