@@ -21,7 +21,8 @@ body, html {
   margin: 0;
   padding: 0;
   height: 100%;
-  background: rgba(0,0,0,0.65)
+  background: rgba(0,0,0,0.65);
+  overflow:auto;
 }
 .navbar {
   margin: 0;
@@ -164,8 +165,14 @@ body, html {
   }
 }
 @keyframes i-info {
-    from {background:rgba(0, 255, 255, 1);}
-    to {background:rgba(0, 255, 255, .5);}
+    from {
+      background:rgba(0, 255, 255, 1);
+      box-shadow: 0px 3px 10px 3px rgba(0, 255, 255, .75);
+    }
+    to {
+      background:rgba(0, 255, 255, .5);
+      box-shadow: 0px 3px 10px 3px rgba(0, 255, 255, .25);
+    }
 }
 .i-container {
   background:rgba(0, 255, 255, 1);
@@ -283,4 +290,193 @@ body, html {
   100% {
     transform: translate(0, -1em) rotate(-225deg);
   }
+}
+.custom_content{
+  padding: 0;
+  margin: 0;
+  width: 100%;
+}
+.shoppinglist {
+  margin-left:2px;
+}
+.bslist {
+  margin-left:2px;
+}
+.bds{
+  margin-left:2px;
+}
+.spanel {
+  margin-top: 10px;
+  border-radius: 0;
+  border: 1px solid #00b8d4;
+  background-color: rgba(255, 255, 255, 0.0);
+}
+.spanel-head {
+  border-radius: 0;
+  border: 1px solid #00b8d4;
+  background-color: #00b8d4;
+  font-family: "Comic Sans MS", cursive, sans-serif;
+  font-weight: 800;
+}
+.spanel-head h2{
+  margin:0;
+  padding: 0;
+  color: black;
+}
+.spanel-body {
+  border-radius: 0;
+  padding: 3px 3px 0px 3px;
+}
+.spanel-foot {
+  border-radius: 0;
+  border: 1px solid #00b8d4;
+  background-color: #00b8d4;
+  color: black;
+  height: 45px;
+  padding: 0;
+}
+.spanel-item {
+  background-color: #00e5ff;
+  height: 50px;
+  margin-bottom: 3px;
+}
+.spanel-item h4{
+  margin: 0;
+  padding-top: 15px;
+  padding-left: 20px;
+  display: inline-block;
+  height: 50px;
+  overflow: hidden;
+  width: 70%;
+  color: black;
+}
+.spanel-item>a>h4:hover {
+  background-color: #00b8d4;
+  height: 50px;
+  cursor: pointer;
+}
+.action{
+  display: inline-block;
+  float: right;
+  height: inherit;
+  width: 30%;
+}
+.action>a:hover {
+  background-color: #00b8d4;
+}
+.icon-link1 {
+  font-size: 20px;
+  height: 50px;
+  padding-top: 15px;
+  display: inline-block;
+  color: red;
+  width: 33.3%;
+  text-align: center;
+  border-left: 1px solid black;
+}
+.icon-link2 {
+  padding-top: 15px;
+  font-size: 20px;
+  color: #1b5e20;
+  width: 33.3%;
+  height: 50px;
+  font-size: 20px;
+  display: inline-block;
+  text-align: center;
+  border-left: 1px solid black;
+}
+.icon-link-e {
+  padding-top: 15px;
+  font-size: 20px;
+  color: #004d40;
+  width: 33.3%;
+  height: 50px;
+  font-size: 20px;
+  display: inline-block;
+  text-align: center;
+  border-left: 1px solid black;
+}
+.add-list {
+  height: 40px;
+  padding-top: 10px;
+  margin-top: 2px;
+  margin-right: 15px;
+  display: inline-block;
+  background-color: #ff5722;
+  color:white;
+  float: right;
+  width: 40px;
+  text-align: center;
+  border-radius: 50px;
+  box-shadow: 1px 1px 2px 2px grey;
+}
+.spanel-item-none {
+  background-color: #90a4ae;
+  height: 50px;
+  margin-bottom: 3px;
+}
+.spanel-item-none h4{
+  margin: 0;
+  padding-top: 15px;
+  padding-left: 20px;
+  display: inline-block;
+  height: 50px;
+  overflow: hidden;
+  width: 100%;
+  color: black;
+}
+.c-add {
+  float: right;
+  padding-top: 10px;
+  text-shadow: 1px 1px grey;
+}
+.spanel-item-loading {
+  background-color: #fb8c00;
+  height: 50px;
+  margin-bottom: 3px;
+}
+.spanel-item-loading h4{
+  margin: 0;
+  padding-top: 15px;
+  padding-left: 20px;
+  display: inline-block;
+  height: 50px;
+  overflow: hidden;
+  width: 90%;
+  color: black;
+}
+.spn {
+  display: inline-block;
+  float: right;
+  height: inherit;
+  width: 10%;
+  padding: 5px;
+}
+.mdl {
+  margin-top: 40%;
+  border: 1px solid cyan;
+  border-radius: 0px;
+  background-color: rgba(0, 184, 212, .9);
+  color: black;
+  font-family: "Comic Sans MS", cursive, sans-serif;
+}
+.mdl>h4{
+  font-weight: 800;
+  margin: 0;
+}
+.close {
+  opacity: .9;
+}
+.modal-header {
+  padding: 5px;
+}
+.input-group {
+  padding-left: 10%;
+  width: 80%;
+}
+.input-group>.form-control {
+  border: 2px solid cyan;
+}
+.input-group>.btn {
+  border: 2px solid cyan;
 }

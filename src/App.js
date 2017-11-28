@@ -9,6 +9,7 @@ import VerifyEmail from './Components/Verify';
 import ForgotPassword from './Components/Forgotpassword';
 import ResetPassword from './Components/Reset';
 import Dashboard from './Components/dashboard';
+import Items from './Components/Items';
 import './App.css';
 
 class App extends Component {
@@ -23,7 +24,8 @@ class App extends Component {
         <Route path="/verify/:token" component={VerifyEmail} />
         <Route path="/forgot_password/" component={ForgotPassword} />
         <Route path="/auth/reset_password/:token" component={ResetPassword} />
-        <Route path="/dashboard/" component={Dashboard} />
+        <Route exact path="/dashboard/" component={Dashboard} />
+        <Route exact path="/dashboard/shoppinglist/:id/items" component={Items} />
         </Switch>
       </div>
     );

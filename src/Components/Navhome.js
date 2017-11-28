@@ -17,6 +17,7 @@ class NavHome extends Component {
   }
   getUser=()=> {
     // Send GET request
+    var self = this;
        const url = 'https://fancy-shoppinglist-api.herokuapp.com/user/';
        axios({
            method: "get",
@@ -36,7 +37,7 @@ class NavHome extends Component {
            return response.data;
        }).catch(function (error) {
            if (error.response) {
-             this.setState({
+             self.setState({
                  logged_in:false
              });
              window.localStorage.clear();

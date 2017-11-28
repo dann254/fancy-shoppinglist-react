@@ -21,6 +21,7 @@ class NavDash extends Component {
   }
   }
   getUser=()=> {
+      var self=this;
     // Send GET request
        const url = 'https://fancy-shoppinglist-api.herokuapp.com/user/';
        axios({
@@ -41,7 +42,7 @@ class NavDash extends Component {
            return response.data;
        }).catch(function (error) {
            if (error.response) {
-             this.setState({
+             self.setState({
                  message: error.response.data.message, failure:true
              });
            } else if (error.request) {
@@ -76,6 +77,12 @@ class NavDash extends Component {
         </div>
       );
     }
+    var usrnm = '';
+    if (!window.localStorage.getItem('username')) {
+      usrnm = this.state.user
+    }else{
+      usrnm = window.localStorage.getItem('username')
+    }
     return (
       <div className="">
       <nav className="navbar navbar-inverse">
@@ -91,7 +98,7 @@ class NavDash extends Component {
           <div className="collapse navbar-collapse" id="myNavbar">
 
             <ul className="b2 nav navbar-nav navbar-right">
-              <li><a href="/register/" className="b"><span className="glyphicon glyphicon-user"></span> {window.localStorage.getItem('username')}</a></li>
+              <li><a href="/register/" className="b"><span className="glyphicon glyphicon-user"></span> {usrnm}</a></li>
               <li><a onClick={this.logout} className="b"><span className="glyphicon glyphicon-log-out"></span> Logout</a></li>
             </ul>
 

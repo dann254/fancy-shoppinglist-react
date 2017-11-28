@@ -79,9 +79,9 @@ class Login extends Component {
             if (!response.statusText === 'OK') {
                 toast.error(response.data.message)
             }
-            console.log(response.data);
             toast.success(response.data.message);
             window.localStorage.setItem('token', response.data.access_token);
+            window.localStorage.setItem('msg',response.data.message );
             self.setState({ redirect: true, message:response.data.message })
             return response.data;
         }).catch(function (error) {
@@ -100,8 +100,7 @@ class Login extends Component {
   render() {
     if (this.state.redirect) {
       return <Redirect push to={{
-        pathname: '/dashboard/',
-        state : {msg:this.state.message}
+        pathname: '/dashboard/'
       }}/>
     }
     let notice = null;
