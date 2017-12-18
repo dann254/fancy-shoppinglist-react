@@ -50,11 +50,18 @@ class BuddyShoppinglists extends Component {
   }
   render() {
     if (this.state.message !== '') {
-      var resp = <div>{this.state.message}</div>
+      var resp = <div className="spanel-item-none"><h4>{this.state.message}</h4></div>
+    }else if (!this.state.buddyshoppinglists[0] && !this.state.success) {
+      var resp = <div className="spanel-item-loading">
+          <h4>Loading</h4>
+           <div className="text-right spn">
+            <span className="fa fa-circle-o-notch fa-spin fa-3x fa-fw"></span>
+           </div>
+      </div>
     } else {
       var resp = this.state.buddyshoppinglists.map(bslist => {
-      return ( <div key={bslist.id}>
-               <h4>{bslist.name}</h4>
+      return ( <div className="spanel-item-bs" key={bslist.id}>
+               <a href={'/dashboard/buddy_shoppinglist/' + bslist.id}><h4>{bslist.name}</h4> </a><div className="action-bs"> <a className="owner" title="buddy" data-toggle="modal" data-target={"#myModal"+bslist.owned_by}> <span className="fa fa-user-circle"> {bslist.owner}</span></a></div>
                </div>
                )
           })
@@ -62,13 +69,13 @@ class BuddyShoppinglists extends Component {
     return (
       <div className="">
       <div className="row bslist col-lg-5 col-md-5 col-sm-12 col-xs-12">
-      <div className="panel panel-danger">
-        <div className="panel-heading">Buddy Shoppinglists</div>
-        <div className="panel-body">
+      <div className="panel spanel-bs">
+        <div className="panel-heading spanel-head-bs"><h2>{"Buddys' Shoppinglists"}</h2></div>
+        <div className="panel-body spanel-body-bs">
           {resp}
 
          </div>
-         <div className="panel-footer">add</div>
+         <div className="panel-footer spanel-foot-bs"></div>
        </div>
        </div>
       </div>

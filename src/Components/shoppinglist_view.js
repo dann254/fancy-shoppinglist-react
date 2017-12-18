@@ -70,12 +70,12 @@ class ShoppinglistView extends Component {
           if (!response.statusText === 'OK') {
               toast.error(response.data.message)
           }
-          toast.success("Shoppinglist edited");
-          var newShopp = self.state.shoppinglists.slice();
+          self.setState({shoppinglists:self.state.shoppinglists.filter(shoppinglists => shoppinglists.id !== id )});
+          let newShopp = self.state.shoppinglists.slice();
           newShopp.push(response.data);
           self.setState({shoppinglists:newShopp})
+          toast.success("Shoppinglist edited")
           self.setState({ editSuccess: true })
-          self.closeModal()
           return response.data;
       }).catch(function (error) {
           if (error.response) {
@@ -93,26 +93,23 @@ class ShoppinglistView extends Component {
   }
   DeleteClickHandler = (id, name) => {
     confirmAlert({
-      title: 'Confirm to Delete',                        // Title dialog
-      message: 'Are you sure you want to delete:  ' + name,               // Message dialog
-      childrenElement: () => <div>Custom UI</div>,       // Custom UI or Component
-      confirmLabel: 'Delete',                           // Text button confirm
-      cancelLabel: 'Cancel',                             // Text button cancel
-      onConfirm: () => this.deleteRequest(id),    // Action after Confirm
+      title: 'Confirm to Delete',
+      message: 'Are you sure you want to delete  ' + name,
+      confirmLabel: 'Delete',
+      cancelLabel: 'Cancel',
+      onConfirm: () => this.deleteRequest(id),
     })
     console.log(id)
 
   }
   ShareClickHandler = (id, name, request) => {
     confirmAlert({
-      title: 'Confirm '+ request,                        // Title dialog
-      message: 'Are you sure you want to '+ request + ' : ' + name +'?',               // Message dialog
-      confirmLabel: request,                           // Text button confirm
-      cancelLabel: 'Cancel',                             // Text button cancel
-      onConfirm: () => this.shareRequest(id),    // Action after Confirm
+      title: 'Confirm '+ request,
+      message: 'Are you sure you want to '+ request + ' ' + name +'?',
+      confirmLabel: request,
+      cancelLabel: 'Cancel',
+      onConfirm: () => this.shareRequest(id),
     })
-    console.log(id)
-
   }
   deleteRequest=(id)=> {
     // Send GET request
@@ -127,9 +124,7 @@ class ShoppinglistView extends Component {
            if (!response.statusText === 'OK') {
                toast.error(response.data.message)
            }
-           console.log(response.data.message);
-
-           console.log(this.state)
+           this.setState({shoppinglists:this.state.shoppinglists.filter(shoppinglists => shoppinglists.id !== this.state.id )});
            return response.data;
        }).catch(function (error) {
            if (error.response) {
@@ -156,9 +151,7 @@ class ShoppinglistView extends Component {
            if (!response.statusText === 'OK') {
                toast.error(response.data.message)
            }
-           console.log(response.data.message);
-           toast.success('Shared')
-           console.log(this.state)
+           toast.success('Success')
            return response.data;
        }).catch(function (error) {
            if (error.response) {
@@ -194,17 +187,18 @@ class ShoppinglistView extends Component {
                </div>
 
                <div className="modal fade" id={"editModal"+shoppinglists.id} role="dialog">
+               <ToastContainer hideProgressBar={true} />
                  <div className="modal-dialog">
 
-                   <div className="modal-content">
+                   <div className="modal-content  mdl">
                      <div className="modal-header">
-                       <button type="button" className="close" data-dismiss="modal">&times;</button>
-                       <h4 className="modal-title">Edit {shoppinglists.name}</h4>
+                       <i className="close" data-dismiss="modal">&times;</i>
+                       <h4 className="modal-title">Edit shoppinglist: {shoppinglists.name}</h4>
                      </div>
                      <div className="modal-body">
                        <form className="form" onSubmit={(evt)=>this.handleSubmit(shoppinglists.id, evt)} >
+                      <label className="f-label m-label"> name: <span className="text-err">{ this.state.errors.sname }</span></label>
                        <div className="input-group">
-                         <label className="f-label"> name: <span className="text-err">{ this.state.errors.sname }</span></label>
                          <input type="text" name="sname" className={this.state.errors.sname ? "form-control f-error":"form-control" } onInput={this.onInputChange} value={this.state.sname} placeholder={shoppinglists.name} required />
                          <span className="input-group-btn">
                            <button className="btn btn-success" type="submit">

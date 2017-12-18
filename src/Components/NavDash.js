@@ -98,7 +98,7 @@ class NavDash extends Component {
           <div className="collapse navbar-collapse" id="myNavbar">
 
             <ul className="b2 nav navbar-nav navbar-right">
-              <li><a href="/register/" className="b"><span className="glyphicon glyphicon-user"></span> {usrnm}</a></li>
+              <li><a href="/user/" className="b"><span className="glyphicon glyphicon-user"></span> {usrnm}</a></li>
               <li><a onClick={this.logout} className="b"><span className="glyphicon glyphicon-log-out"></span> Logout</a></li>
             </ul>
 

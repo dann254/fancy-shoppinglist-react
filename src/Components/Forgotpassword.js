@@ -52,7 +52,7 @@ class ForgotPassword extends Component {
       var self =this;
         var data = { "email": email }
         // const proxyUrl = 'https://cors-anywhere.herokuapp.com/';
-        const url = 'https://fancy-shoppinglist-api.herokuapp.com//auth/forgot_password';
+        const url = 'https://fancy-shoppinglist-api.herokuapp.com/auth/forgot_password';
         axios({
             method: "post",
             url: url,
