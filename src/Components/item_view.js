@@ -54,13 +54,14 @@ class ItemView extends Component {
   }
   handleSubmit=(itemId, evt)=> {
       evt.preventDefault();
+      console.log(this.state.errors.sitem);
       if (this.state.errors.sitem !== '') {
         toast.error("Please enter a valid shoppinglist name")
       }else{
-        this.sendAddRequest(this.state.sitem, this.state.price, this.state.quantity, this.props.sid, itemId);
+        this.sendEditRequest(this.state.sitem, this.state.price, this.state.quantity, this.props.sid, itemId);
       }
   }
-  sendAddRequest(sitem, price, quantity, id, itemId) {
+  sendEditRequest(sitem, price, quantity, id, itemId) {
     var self =this;
       var data = { 'name': sitem, 'price':price, 'quantity':quantity}
       const url = 'https://fancy-shoppinglist-api.herokuapp.com/shoppinglists/'+id+'/items/'+ itemId;
@@ -71,16 +72,14 @@ class ItemView extends Component {
               'Auth': window.localStorage.getItem('token')
           },
           data: data
-      }).then(function (response) {
+      }).then((response) => {
           if (!response.statusText === 'OK') {
               toast.error(response.data.message)
           }
+          this.props.ItemHandler(id)
+          document.getElementById('item-modal-close'+itemId).click()
           toast.success("Item edited");
-          var newShopp = self.state.items.slice();
-          newShopp.push(response.data);
-          self.setState({items:newShopp})
-          self.setState({ addSuccess: true })
-          self.closeModal()
+          this.setState({ editSuccess: true, sitem:'', price: '', quantity: '' })
           return response.data;
       }).catch(function (error) {
           if (error.response) {
@@ -122,7 +121,7 @@ class ItemView extends Component {
                toast.error(response.data.message)
            }
            console.log(response.data.message);
-
+           this.props.ItemHandler(this.props.sid)
            console.log(this.state)
            return response.data;
        }).catch(function (error) {
@@ -154,7 +153,7 @@ class ItemView extends Component {
 
               <div className="modal-content mdl">
                 <div className="modal-header">
-                  <button type="button" className="close close-x" data-dismiss="modal">&times;</button>
+                  <button type="button" className="close close-x" data-dismiss="modal" id={"item-modal-close"+items.id}>&times;</button>
                   <h3 className="modal-title">Edit Item: {items.name}</h3>
                 </div>
                 <div className="modal-body">
@@ -167,11 +166,9 @@ class ItemView extends Component {
 
                     <label className="f-label">quantity: <span className="text-err">{ this.state.errors.quantity }</span></label>
                     <input type="text" name="quantity" className={this.state.errors.quantity ? "form-control f-error":"form-control" } onInput={this.onInputChange} value={this.state.quantity} placeholder={items.quantity} />
-                    <span className="input-group-btn">
                       <button className="btn btn-success" type="submit">
-                          add
+                          edit
                       </button>
-                    </span>
                     </form>
                   </div>
               </div>

@@ -66,16 +66,14 @@ class ShoppinglistView extends Component {
               'Auth': window.localStorage.getItem('token')
           },
           data: data
-      }).then(function (response) {
+      }).then((response) => {
           if (!response.statusText === 'OK') {
               toast.error(response.data.message)
           }
-          self.setState({shoppinglists:self.state.shoppinglists.filter(shoppinglists => shoppinglists.id !== id )});
-          let newShopp = self.state.shoppinglists.slice();
-          newShopp.push(response.data);
-          self.setState({shoppinglists:newShopp})
+          this.props.shandler()
           toast.success("Shoppinglist edited")
-          self.setState({ editSuccess: true })
+          document.getElementById('modal-close'+id).click()
+          self.setState({ editSuccess: true, sname: '' })
           return response.data;
       }).catch(function (error) {
           if (error.response) {
@@ -124,7 +122,8 @@ class ShoppinglistView extends Component {
            if (!response.statusText === 'OK') {
                toast.error(response.data.message)
            }
-           this.setState({shoppinglists:this.state.shoppinglists.filter(shoppinglists => shoppinglists.id !== this.state.id )});
+           this.props.shandler()
+           toast.success("Shoppinglists deleted")
            return response.data;
        }).catch(function (error) {
            if (error.response) {
@@ -151,6 +150,7 @@ class ShoppinglistView extends Component {
            if (!response.statusText === 'OK') {
                toast.error(response.data.message)
            }
+           this.props.shandler()
            toast.success('Success')
            return response.data;
        }).catch(function (error) {
@@ -187,12 +187,11 @@ class ShoppinglistView extends Component {
                </div>
 
                <div className="modal fade" id={"editModal"+shoppinglists.id} role="dialog">
-               <ToastContainer hideProgressBar={true} />
                  <div className="modal-dialog">
 
                    <div className="modal-content  mdl">
                      <div className="modal-header">
-                       <i className="close" data-dismiss="modal">&times;</i>
+                       <a className="close" data-dismiss="modal" id={"modal-close"+shoppinglists.id}>&times;</a>
                        <h4 className="modal-title">Edit shoppinglist: {shoppinglists.name}</h4>
                      </div>
                      <div className="modal-body">

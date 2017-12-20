@@ -76,12 +76,12 @@ class Items extends Component {
           if (!response.statusText === 'OK') {
               toast.error(response.data.message)
           }
+          document.getElementById('item-modal-close').click()
           toast.success("Item created");
           var newShopp = self.state.items.slice();
           newShopp.push(response.data);
-          self.setState({items:newShopp})
+          self.setState({items:newShopp, sitem:'', price: '', quantity: ''})
           self.setState({ addSuccess: true })
-          self.closeModal()
           return response.data;
       }).catch(function (error) {
           if (error.response) {
@@ -133,6 +133,11 @@ class Items extends Component {
         console.log(error.config);
     });
   }
+
+  ItemHandler=(id) => {
+    this.loadItems( id );
+  }
+
   loadItems=(id)=>{
     const url = 'https://fancy-shoppinglist-api.herokuapp.com/shoppinglists/'+id+'/items';
     axios({
@@ -165,6 +170,7 @@ class Items extends Component {
         console.log(error.config);
     });
   }
+
   render() {
     if (!this.state.items[0]&& this.state.success===true) {
       var adds = <span className="c-add">Click here to add  <span className="fa fa-hand-o-right"> </span> </span>
@@ -179,36 +185,39 @@ class Items extends Component {
            </div>
       </div>
     } else {
-      var load = <ItemView items={this.state.items} sid={this.props.match.params.id} />
+      var load = <ItemView items={this.state.items} ItemHandler={this.ItemHandler} sid={this.props.match.params.id} />
     }
     return (
       <div className="items">
         <NavDash />
         <ToastContainer hideProgressBar={true} />
-        <div>
-          {this.state.shoppinglist.name}
-          <a data-toggle="modal" data-target="#myModal" className="add-list"> <span className="fa fa-plus"></span></a>
+        <div className="item-container">
+          <div className="item-t row col-lg-3 col-md-3 col-sm-12 col-xs-12">
+            <span className="s-heading">{this.state.shoppinglist.name}</span>
+            <a data-toggle="modal" data-target="#myModal" className="add-item-l"> <span className="fa fa-plus"> Add item</span></a>
+            <a href="/dashboard" className="back-l">Back to dashboard</a>
+          </div>
+          <div className="row col-lg-9 col-md-9 col-sm-12 col-xs-12">
+            <table className="table table-striped my-t">
+            <thead>
+              <tr>
+                <th>Item name</th>
+                <th>unit price</th>
+                <th>Quantity</th>
+                <th>action</th>
+              </tr>
+            </thead>
+            {load}
+            </table>
+          </div>
         </div>
-
-        <table className="table table-bordered">
-        <thead>
-          <tr>
-            <td>Item name</td>
-            <td>unit price</td>
-            <td>Quantity</td>
-            <td>action</td>
-          </tr>
-        </thead>
-        {load}
-        </table>
-
         <div id="myModal" className="modal fade" role="dialog">
           <div className="modal-dialog">
 
 
             <div className="modal-content mdl">
               <div className="modal-header">
-                <button type="button" className="close close-x" data-dismiss="modal">&times;</button>
+                <button type="button" className="close close-x" data-dismiss="modal" id="item-modal-close">&times;</button>
                 <h3 className="modal-title">Add Item</h3>
               </div>
               <div className="modal-body">

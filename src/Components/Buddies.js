@@ -66,9 +66,10 @@ class Buddies extends Component {
         if (!response.statusText === 'OK') {
             toast.error(response.data.message)
         }
-        console.log(response.data);
+        this.getBuddies()
+        document.getElementById('b-modal-close').click()
         this.setState({success: true})
-        toast.success(response.data.message)
+        toast.success("Successfully added")
 
         return response.data;
     }).catch(function (error) {
@@ -107,9 +108,9 @@ class Buddies extends Component {
         if (!response.statusText === 'OK') {
             toast.error(response.data.message)
         }
-        console.log(response.data);
+        this.getBuddies()
         this.setState({success: true})
-        toast.success(response.data.message)
+        toast.success("Buddy unfriended!")
 
         return response.data;
     }).catch(function (error) {
@@ -210,7 +211,7 @@ class Buddies extends Component {
 
            <div className="modal-content mdl">
              <div className="modal-header">
-               <a className="close close-x" data-dismiss="modal">&times;</a>
+               <a className="close close-x" data-dismiss="modal" id="b-modal-close">&times;</a>
                <h3 className="modal-title">Invite buddy</h3>
              </div>
              <div className="modal-body">

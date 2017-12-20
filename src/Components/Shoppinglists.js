@@ -7,7 +7,7 @@ import ShoppinglistView from './shoppinglist_view';
 class Shoppinglists extends Component {
   constructor(props) {
     super(props)
-    this.state = { sname: '', shoppinglists: [], success: false, message:'', errors: { sname: '' }, addSuccess: false, paginateLimit: 10, start:1, search:'', links:{} }
+    this.state = { sname: '', shoppinglists: [], success: false, message:'', errors: { sname: '' }, addSuccess: false, paginateLimit: 10, start:1, search:'', links:{}}
   }
   componentWillMount=() => {
     let pg = '?start='+this.state.start+"&limit="+this.state.paginateLimit
@@ -81,6 +81,7 @@ class Shoppinglists extends Component {
         }
       }
   }
+
   handleSubmit=(evt)=> {
       evt.preventDefault();
       if (this.state.errors.sname !== '') {
@@ -109,7 +110,8 @@ class Shoppinglists extends Component {
           var newShopp = self.state.shoppinglists.slice();
           newShopp.push(response.data);
           self.setState({shoppinglists:newShopp})
-          self.setState({ addSuccess: true })
+          document.getElementById('modal-close').click()
+          self.setState({ addSuccess: true, sname: '' })
           self.closeModal()
           return response.data;
       }).catch(function (error) {
@@ -167,6 +169,10 @@ class Shoppinglists extends Component {
            console.log(error.config);
        });
   }
+  ShoppinglistHandler = () => {
+    let pg = '?start='+this.state.start+"&limit="+this.state.paginateLimit
+    this.getShoppinglists(pg)
+  }
   render() {
     if (!this.state.shoppinglists[0] && !this.state.success && this.state.message === 'you dont have any shoppinglists with that name') {
       var load = <div className="spanel-item-none">
@@ -185,7 +191,7 @@ class Shoppinglists extends Component {
            </div>
       </div>
     } else {
-      var load = <ShoppinglistView shoppinglists={this.state.shoppinglists} />
+      var load = <ShoppinglistView shoppinglists={this.state.shoppinglists}  shandler={this.ShoppinglistHandler} />
     }
 
     if (!this.state.links) {
@@ -216,12 +222,12 @@ class Shoppinglists extends Component {
        </div>
 
         <div id="myModal" className="modal fade" role="dialog">
+          <ToastContainer hideProgressBar={true} />
           <div className="modal-dialog">
-
 
             <div className="modal-content mdl">
               <div className="modal-header">
-                <a type="button" className="close close-x" data-dismiss="modal">&times;</a>
+                <a type="button" className="close close-x" data-dismiss="modal" id="modal-close">&times;</a>
                 <h3 className="modal-title">Add Shoppinglist</h3>
               </div>
               <div className="modal-body">

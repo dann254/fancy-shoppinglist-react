@@ -731,3 +731,60 @@ body, html {
 .prof-info{
   color: #00e676;
 }
+.item-container {
+  width: 90%;
+  margin-left: 5%;
+  padding-top:30px;
+}
+.my-t {
+  background: rgba(255, 255, 255, 0.8);
+  color: black;
+  border: 2px solid #00e5ff;
+}
+.my-t>thead>tr>th{
+  border-bottom: 2px solid #00e5ff;
+}
+.item-t {
+  padding: 0;
+  margin:0;
+}
+.s-heading {
+  display: block;
+  background-color: #00e5ff;
+  font-size: 30px;
+  font-family: "Comic Sans MS", cursive, sans-serif;
+  padding-left: 3px;
+  color: black;
+}
+.add-item-l {
+  display: block;
+  border: 1px solid #ff1744;
+  background: rgba(0,0,0,.5);
+  font-size: 20px;
+  font-family: "Comic Sans MS", cursive, sans-serif;
+  padding-left: 3px;
+  color: #ff1744;
+  text-align: center;
+}
+.back-l {
+  display: block;
+  background: rgba(0,0,0,.5);
+  border: 1px solid cyan;
+  text-decoration: none;
+  font-size: 20px;
+  font-family: "Comic Sans MS", cursive, sans-serif;
+  padding-left: 3px;
+  color: cyan;
+  text-align: center;
+}
+.add-item-l:hover {
+  text-decoration: none;
+  color: cyan;
+  background: rgba(0,255,255,.5);
+  cursor: pointer;
+}
+.back-l:hover {
+  text-decoration: none;
+  color: cyan;
+  background: rgba(0,255,255,.5);
+}
