@@ -4,6 +4,7 @@ import { Redirect } from 'react-router-dom';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
+import * as api from './API_URLS'
 
 class Login extends Component {
   constructor(props) {
@@ -65,9 +66,10 @@ class Login extends Component {
 
     }
     sendRequest(username, password) {
+      console.log(api.loginEp)
         var self=this;
         var data = { "username": username, "password": password }
-        const url = 'https://fancy-shoppinglist-api.herokuapp.com/auth/login/';
+        const url = api.loginEp;
         axios({
             method: "post",
             url: url,
