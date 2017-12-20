@@ -4,6 +4,7 @@ import { Redirect } from 'react-router-dom';
 import axios from 'axios';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
+import * as api from './API_URLS'
 
 class Login extends Component {
   constructor(props) {
@@ -65,9 +66,10 @@ class Login extends Component {
 
     }
     sendRequest(username, password) {
+      console.log(api.loginEp)
         var self=this;
         var data = { "username": username, "password": password }
-        const url = 'https://fancy-shoppinglist-api.herokuapp.com/auth/login/';
+        const url = api.loginEp;
         axios({
             method: "post",
             url: url,
@@ -79,9 +81,9 @@ class Login extends Component {
             if (!response.statusText === 'OK') {
                 toast.error(response.data.message)
             }
-            console.log(response.data);
             toast.success(response.data.message);
             window.localStorage.setItem('token', response.data.access_token);
+            window.localStorage.setItem('msg',response.data.message );
             self.setState({ redirect: true, message:response.data.message })
             return response.data;
         }).catch(function (error) {
@@ -100,8 +102,7 @@ class Login extends Component {
   render() {
     if (this.state.redirect) {
       return <Redirect push to={{
-        pathname: '/login/',
-        state : {msg:this.state.message}
+        pathname: '/dashboard/'
       }}/>
     }
     let notice = null;
@@ -110,6 +111,13 @@ class Login extends Component {
     }
     if (this.state.failure && this.state.message === "Invalid username or password") {
         notice = <div className="i-c"><div className="i-container col-lg-4 col-lg-offset-4 col-xs-6 col-xs-offset-3 col-md-4 col-md-offset-4">Dont have an account? <a href="/register/" className="btn btn-md i-submit">Sign Up</a></div></div>
+    }
+    try {
+      if (this.props.location.state.msg === 'Your session expired. Please login to continue') {
+        notice = <div className="i-c"><div className="i-container col-lg-4 col-lg-offset-4 col-xs-6 col-xs-offset-3 col-md-4 col-md-offset-4">You have been logged out please login to continue.</div></div>
+      }
+    } catch (e) {
+
     }
     return (
       <div className="">
