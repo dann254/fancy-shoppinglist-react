@@ -49,7 +49,7 @@ class ShoppinglistView extends Component {
     // username validation
     if (fields.sname) {
       var usn = fields.sname;
-      if (usn.length < 3) {
+      if (usn.length < 2) {
         errors = "name should be three or more characters long";
         return errors;
       }
@@ -168,7 +168,7 @@ class ShoppinglistView extends Component {
   // send and handle share request
   shareRequest = id => {
     // Send GET request
-    const url = api.shoppinglistsEP + id;
+    const url = api.shoppinglistShareEP + id;
     axios({
       method: "put",
       url: url,
@@ -195,6 +195,12 @@ class ShoppinglistView extends Component {
         }
         console.log(error.config);
       });
+  };
+  reset = () => {
+    this.setState({
+      errors: { sname: "" },
+      sname: ""
+    });
   };
 
   // redner shoppinglist
@@ -258,6 +264,7 @@ class ShoppinglistView extends Component {
                     data-toggle="modal"
                     data-target={"#editModal" + shoppinglists.id}
                     title="Edit"
+                    onClick={this.reset}
                   >
                     <span className="fa fa-edit " />
                   </a>

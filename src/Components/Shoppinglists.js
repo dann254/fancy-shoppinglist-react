@@ -121,7 +121,7 @@ class Shoppinglists extends Component {
       },
       data: data
     })
-      .then(function(response) {
+      .then(response => {
         if (!response.statusText === "OK") {
           console.log(response.data.message);
         }
@@ -129,12 +129,11 @@ class Shoppinglists extends Component {
         var newShopp = this.state.shoppinglists.slice();
         newShopp.push(response.data);
         this.setState({ shoppinglists: newShopp });
-        document.getElementById("modal-close").click();
+        document.getElementById("as-modal-close").click();
         this.setState({ addSuccess: true, sname: "" });
-        this.closeModal();
         return response.data;
       })
-      .catch(function(error) {
+      .catch(error => {
         if (error.response) {
           toast.error(error.response.data.message);
         } else if (error.request) {
@@ -173,7 +172,6 @@ class Shoppinglists extends Component {
           links: response.data.links
         });
 
-        console.log(this.state);
         return response.data;
       })
       .catch(function(error) {
@@ -191,6 +189,12 @@ class Shoppinglists extends Component {
         }
         console.log(error.config);
       });
+  };
+  reset = () => {
+    this.setState({
+      errors: { sname: "" },
+      sname: ""
+    });
   };
 
   // handle manipulation of shoppinglists
@@ -284,7 +288,6 @@ class Shoppinglists extends Component {
     }
     return (
       <div className="">
-        <ToastContainer hideProgressBar={true} />
         <div className="row shoppinglist col-lg-5 col-md-5 col-sm-12 col-xs-12">
           <div className="panel spanel">
             <div className="panel-heading spanel-head">
@@ -319,6 +322,7 @@ class Shoppinglists extends Component {
                 data-toggle="modal"
                 data-target="#myModal"
                 className="add-list"
+                onClick={this.reset}
               >
                 <span className="fa fa-plus" />
               </a>
@@ -328,7 +332,6 @@ class Shoppinglists extends Component {
         </div>
 
         <div id="myModal" className="modal fade" role="dialog">
-          <ToastContainer hideProgressBar={true} />
           <div className="modal-dialog">
             <div className="modal-content mdl">
               <div className="modal-header">
@@ -336,7 +339,7 @@ class Shoppinglists extends Component {
                   type="button"
                   className="close close-x"
                   data-dismiss="modal"
-                  id="modal-close"
+                  id="as-modal-close"
                 >
                   &times;
                 </a>

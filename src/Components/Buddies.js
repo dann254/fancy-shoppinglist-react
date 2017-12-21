@@ -89,6 +89,7 @@ class Buddies extends Component {
           console.log(response.data.message);
         }
         this.getBuddies();
+        this.props.refresh();
         document.getElementById("b-modal-close").click();
         this.setState({ success: true });
         toast.success("Successfully added");
@@ -133,6 +134,7 @@ class Buddies extends Component {
           console.log(response.data.message);
         }
         this.getBuddies();
+        this.props.refresh();
         this.setState({ success: true });
         toast.success("Buddy unfriended!");
 

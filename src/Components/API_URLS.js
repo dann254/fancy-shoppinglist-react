@@ -13,3 +13,4 @@ export const userEp = rootURL + "user/";
 export const buddiesEP = rootURL + "buddies/";
 export const buddiesListEP = rootURL + "buddies/shoppinglists/";
 export const shoppinglistsEP = rootURL + "shoppinglists/";
+export const shoppinglistShareEP = rootURL + "shoppinglists/share/";

@@ -15,7 +15,6 @@ class Items extends Component {
       errors: { sitem: "", price: "", quantity: "" },
       items: [],
       success: false,
-      errors: "",
       sitem: "",
       price: "",
       quantity: ""
@@ -46,7 +45,7 @@ class Items extends Component {
     // username validation
     if (fields.sitem) {
       var usn = fields.sitem;
-      if (usn.length < 3) {
+      if (usn.length < 2) {
         errors = "name should be three or more characters long";
         return errors;
       }
@@ -61,13 +60,37 @@ class Items extends Component {
         return errors;
       }
     }
+    if (fields.price) {
+      var price = fields.price;
+      // Regular expression to validate price
+      var re = /^[0-9]+$/;
+      var re2 = /^[0-9]+[.]+[0-9]+$/;
+      if (!price.match(re) && !price.match(re2)) {
+        errors = "invalid value";
+        return errors;
+      }
+    }
+    if (fields.quantity) {
+      var qty = fields.quantity;
+      // Regular expression to validate quantity
+      var re = /^[0-9]+$/;
+      var re2 = /^[0-9]+[.]+[0-9]+$/;
+      if (!qty.match(re) && !qty.match(re2)) {
+        errors = "invalid value";
+        return errors;
+      }
+    }
   };
 
   // handle form submission
   handleSubmit = evt => {
     evt.preventDefault();
-    if (this.state.errors.sitem !== "") {
-      toast.error("Please enter a valid shoppinglist name");
+    if (
+      this.state.errors.sitem !== "" ||
+      this.state.errors.price !== "" ||
+      this.state.errors.quantity !== ""
+    ) {
+      toast.error("please enter valid values");
     } else {
       this.sendAddRequest(
         this.state.sitem,
@@ -172,13 +195,11 @@ class Items extends Component {
         if (!response.statusText === "OK") {
           console.log(response.data.message);
         }
-        console.log(response.data);
         this.setState({ success: true });
         this.setState({
           items: response.data.results
         });
 
-        console.log(this.state);
         return response.data;
       })
       .catch(error => {
@@ -193,26 +214,36 @@ class Items extends Component {
         console.log(error.config);
       });
   };
+  reset = () => {
+    this.setState({
+      errors: { sitem: "", price: "", quantity: "" },
+      sitem: "",
+      price: "",
+      quantity: ""
+    });
+  };
 
   // render items
   render() {
     if (!this.state.items[0] && this.state.success === true) {
-      var adds = (
-        <span className="c-add">
-          Click here to add <span className="fa fa-hand-o-right"> </span>{" "}
-        </span>
-      );
       var load = (
-        <div className="spanel-item-none">
-          <h4>You dont have any shoppinglists</h4>
-        </div>
+        <tbody>
+          <tr>
+            <td className="item-none" colSpan="4">
+              This shoppinglist has no items
+            </td>
+          </tr>
+        </tbody>
       );
     } else if (!this.state.items[0] && !this.state.success) {
-      var load = (
-        <div className="spanel-item-loading">
-          <h4>Loading</h4>
-          <div className="text-right spn">
-            <span className="fa fa-circle-o-notch fa-spin fa-3x fa-fw" />
+      return (
+        <div>
+          <NavDash />
+          <div className="item-loading">
+            <div className="spn-item">
+              <span className="fa fa-circle-o-notch fa-spin fa-3x fa-fw" />
+            </div>
+            <h4>Loading</h4>
           </div>
         </div>
       );
@@ -229,22 +260,24 @@ class Items extends Component {
       <div className="items">
         <NavDash />
         <ToastContainer hideProgressBar={true} />
+        <div className="s-heading">
+          <span>{this.state.shoppinglist.name}</span>
+          <a
+            data-toggle="modal"
+            data-target="#myModal"
+            className="add-item-l"
+            onClick={this.reset}
+          >
+            Add item
+            <span className="fa fa-plus"> </span>
+          </a>
+          <a href="/dashboard" className="back-l">
+            Back to dashboard
+          </a>
+        </div>
         <div className="item-container">
-          <div className="item-t row col-lg-3 col-md-3 col-sm-12 col-xs-12">
-            <span className="s-heading">{this.state.shoppinglist.name}</span>
-            <a
-              data-toggle="modal"
-              data-target="#myModal"
-              className="add-item-l"
-            >
-              {" "}
-              <span className="fa fa-plus"> Add item</span>
-            </a>
-            <a href="/dashboard" className="back-l">
-              Back to dashboard
-            </a>
-          </div>
-          <div className="row col-lg-9 col-md-9 col-sm-12 col-xs-12">
+          <div className="item-t" />
+          <div className="">
             <table className="table table-striped my-t">
               <thead>
                 <tr>
@@ -262,14 +295,13 @@ class Items extends Component {
           <div className="modal-dialog">
             <div className="modal-content mdl">
               <div className="modal-header">
-                <button
-                  type="button"
+                <a
                   className="close close-x"
                   data-dismiss="modal"
                   id="item-modal-close"
                 >
                   &times;
-                </button>
+                </a>
                 <h3 className="modal-title">Add Item</h3>
               </div>
               <div className="modal-body">
@@ -331,11 +363,13 @@ class Items extends Component {
                     placeholder="Quantity"
                     required
                   />
-                  <span className="input-group-btn">
-                    <button className="btn btn-success" type="submit">
-                      add
-                    </button>
-                  </span>
+                  <br />
+                  <button
+                    className="btn btn-success btn-block f-submit"
+                    type="submit"
+                  >
+                    add
+                  </button>
                 </form>
               </div>
             </div>

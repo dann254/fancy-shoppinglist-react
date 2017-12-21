@@ -15,10 +15,14 @@ class Dashboard extends Component {
       shoppinglists: [],
       buddyshoppinglists: ["random"],
       buddies: [],
-      success: false
+      success: false,
+      buddyLists: "",
+      rerender: false
     };
   }
-
+  componentWillMount = () => {
+    this.buddyShoppinglists();
+  };
   // show welcome message
   componentDidMount() {
     try {
@@ -28,6 +32,13 @@ class Dashboard extends Component {
       }
     } catch (e) {}
   }
+  buddyShoppinglists = () => {
+    this.setState({ rerender: true });
+    this.setState({
+      buddyLists: <BuddyShoppinglists refresh={this.state.rerender} />
+    });
+    this.setState({ rerender: false });
+  };
   render() {
     if (!window.localStorage.getItem("token")) {
       return <NavDash />;
@@ -38,8 +49,8 @@ class Dashboard extends Component {
         <NavDash />
         <div className="container custom_content">
           <Shoppinglists />
-          <BuddyShoppinglists />
-          <Buddies />
+          {this.state.buddyLists}
+          <Buddies refresh={this.buddyShoppinglists} />
         </div>
       </div>
     );

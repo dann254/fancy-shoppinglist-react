@@ -59,14 +59,43 @@ class ItemView extends Component {
         return errors;
       }
     }
+    if (fields.price) {
+      var price = fields.price;
+      // Regular expression to validate price
+      var re = /^[0-9]+$/;
+      var re2 = /^[0-9]+[.]+[0-9]+$/;
+      if (!price.match(re) && !price.match(re2)) {
+        errors = "invalid value";
+        return errors;
+      }
+    }
+    if (fields.quantity) {
+      var qty = fields.quantity;
+      // Regular expression to validate quantity
+      var re = /^[0-9]+$/;
+      var re2 = /^[0-9]+[.]+[0-9]+$/;
+      if (!qty.match(re) && !qty.match(re2)) {
+        errors = "invalid value";
+        return errors;
+      }
+    }
   };
 
   // handle form submission
   handleSubmit = (itemId, evt) => {
     evt.preventDefault();
-    console.log(this.state.errors.sitem);
-    if (this.state.errors.sitem !== "") {
-      toast.error("Please enter a valid shoppinglist name");
+    if (
+      this.state.sitem === "" &&
+      this.state.price === "" &&
+      this.state.quantity === ""
+    ) {
+      toast.error("nothing to submit");
+    } else if (
+      this.state.errors.sitem !== "" ||
+      this.state.errors.price !== "" ||
+      this.state.errors.quantity !== ""
+    ) {
+      toast.error("please enter valid values");
     } else {
       this.sendEditRequest(
         this.state.sitem,
@@ -161,6 +190,14 @@ class ItemView extends Component {
         console.log(error.config);
       });
   };
+  reset = () => {
+    this.setState({
+      errors: { sitem: "", price: "", quantity: "" },
+      sitem: "",
+      price: "",
+      quantity: ""
+    });
+  };
   // render items
   render() {
     return (
@@ -171,13 +208,14 @@ class ItemView extends Component {
               <td>{items.name}</td>
               <td>{items.price}</td>
               <td>{items.quantity}</td>
-              <td>
+              <td className="item-action">
                 <a
                   data-toggle="modal"
                   data-target={"#editModal" + items.id}
                   title="Edit"
+                  onClick={this.reset}
                 >
-                  edit
+                  <span className="fa fa-edit " />
                 </a>{" "}
                 |{" "}
                 <a
@@ -199,14 +237,13 @@ class ItemView extends Component {
                 <div className="modal-dialog">
                   <div className="modal-content mdl">
                     <div className="modal-header">
-                      <button
-                        type="button"
+                      <a
                         className="close close-x"
                         data-dismiss="modal"
                         id={"item-modal-close" + items.id}
                       >
                         &times;
-                      </button>
+                      </a>
                       <h3 className="modal-title">Edit Item: {items.name}</h3>
                     </div>
                     <div className="modal-body">
@@ -272,7 +309,11 @@ class ItemView extends Component {
                           value={this.state.quantity}
                           placeholder={items.quantity}
                         />
-                        <button className="btn btn-success" type="submit">
+                        <br />
+                        <button
+                          className="btn btn-success btn-block f-submit"
+                          type="submit"
+                        >
                           edit
                         </button>
                       </form>

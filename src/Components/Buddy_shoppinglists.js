@@ -8,7 +8,6 @@ class BuddyShoppinglists extends Component {
   constructor(props) {
     super(props);
     this.state = { buddyshoppinglists: [], success: false, message: "" };
-    this.getBuddyShoppinglists = this.getBuddyShoppinglists.bind(this);
   }
   // mount buddy shoppinglists when the page loads
   componentWillMount = () => {
@@ -16,7 +15,7 @@ class BuddyShoppinglists extends Component {
   };
 
   // send and resolve getting the shoppinglists
-  getBuddyShoppinglists() {
+  getBuddyShoppinglists = () => {
     // Send GET request
     const url = api.buddiesListEP;
     axios({
@@ -50,8 +49,11 @@ class BuddyShoppinglists extends Component {
         }
         console.log(error.config);
       });
-  }
+  };
   render() {
+    if (this.props.refresh === true) {
+      this.getBuddyShoppinglists();
+    }
     // SHow loading when the component hasnt mounted. and handle shoppinglist states appropriately
     if (this.state.message !== "") {
       var resp = (

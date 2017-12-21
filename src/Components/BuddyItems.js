@@ -58,22 +58,24 @@ class BuddyItems extends Component {
   // render items
   render() {
     if (!this.state.items[0] && this.state.success === true) {
-      var adds = (
-        <span className="c-add">
-          Click here to add <span className="fa fa-hand-o-right"> </span>{" "}
-        </span>
-      );
       var load = (
-        <div className="spanel-item-none">
-          <h4>This shoppinglist has no items</h4>
-        </div>
+        <tbody>
+          <tr>
+            <td className="item-none" colSpan="4">
+              This shoppinglist has no items
+            </td>
+          </tr>
+        </tbody>
       );
     } else if (!this.state.items[0] && !this.state.success) {
-      var load = (
-        <div className="spanel-item-loading">
-          <h4>Loading</h4>
-          <div className="text-right spn">
-            <span className="fa fa-circle-o-notch fa-spin fa-3x fa-fw" />
+      return (
+        <div>
+          <NavDash />
+          <div className="item-loading">
+            <div className="spn-item">
+              <span className="fa fa-circle-o-notch fa-spin fa-3x fa-fw" />
+            </div>
+            <h4>Loading</h4>
           </div>
         </div>
       );
@@ -89,20 +91,28 @@ class BuddyItems extends Component {
       <div className="items">
         <NavDash />
         <ToastContainer hideProgressBar={true} />
-        <div>
-          {this.state.shoppinglist.name} {this.state.owner.username}
+        <div className="s-heading-s">
+          <a href="/dashboard" className="back-l">
+            Back to dashboard
+          </a>
+          <span>{this.state.shoppinglist.name}</span>
+          <span className="owner-l">
+            <span className="sub-l">shared by </span>
+            {this.state.owner.username}
+          </span>
         </div>
-
-        <table className="table table-bordered">
-          <thead>
-            <tr>
-              <td>Item name</td>
-              <td>unit price</td>
-              <td>Quantity</td>
-            </tr>
-          </thead>
-          {load}
-        </table>
+        <div className="item-container">
+          <table className="table table-striped my-t-s">
+            <thead>
+              <tr>
+                <td>Item name</td>
+                <td>unit price</td>
+                <td>Quantity</td>
+              </tr>
+            </thead>
+            {load}
+          </table>
+        </div>
       </div>
     );
   }

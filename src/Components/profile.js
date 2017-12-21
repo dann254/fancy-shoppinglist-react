@@ -5,6 +5,8 @@ import { Redirect } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
 import * as api from "./API_URLS";
+import { confirmAlert } from "react-confirm-alert";
+import "react-confirm-alert/src/react-confirm-alert.css";
 
 class Profile extends Component {
   constructor(props) {
@@ -18,7 +20,8 @@ class Profile extends Component {
       user: {},
       success: false,
       message: "",
-      failure: false
+      failure: false,
+      redirect: false
     };
   }
 
@@ -173,6 +176,46 @@ class Profile extends Component {
     }
   };
 
+  // handle deleting account request with a confirmation modal
+  DeleteClickHandler = () => {
+    confirmAlert({
+      title: "Confirm Delete",
+      message: "Are you sure you want to delete your account",
+      confirmLabel: "Delete",
+      cancelLabel: "Cancel",
+      onConfirm: () => this.deleteHandler()
+    });
+  };
+
+  // send and resolve unfriend request.
+  deleteHandler = () => {
+    const url = api.userEp;
+    axios({
+      method: "delete",
+      url: url,
+      headers: {
+        Auth: window.localStorage.getItem("token")
+      }
+    })
+      .then(response => {
+        if (!response.statusText === "OK") {
+          console.log(response.data.message);
+        }
+        window.localStorage.clear();
+        this.setState({ redirect: true });
+        return response.data;
+      })
+      .catch(error => {
+        if (error.response) {
+          toast.error(error.response.data.message);
+        } else if (error.request) {
+          console.log(error.request);
+        } else {
+          console.log("Error", JSON.stringify(error.message));
+        }
+        console.log(error.config);
+      });
+  };
   // send and handle data submission
   sendRequest(content) {
     const url = api.userEp;
@@ -206,6 +249,16 @@ class Profile extends Component {
   }
   // render user deatails
   render() {
+    if (this.state.redirect) {
+      return (
+        <Redirect
+          push
+          to={{
+            pathname: "/"
+          }}
+        />
+      );
+    }
     if (!this.state.user.username && !this.state.success) {
       var load = (
         <div className="spanel-item-loading">
@@ -218,33 +271,55 @@ class Profile extends Component {
     } else {
       var load = (
         <div>
-          <span>
-            Username: {this.state.user.username}{" "}
-            <a
-              data-toggle="modal"
-              data-target="#username"
-              title="Edit username"
-            >
-              edit
-            </a>
-          </span>
-          <br />
-          <span>
-            Email: {this.state.user.email}
-            <a data-toggle="modal" data-target="#email" title="Edit email">
-              edit
-            </a>
-          </span>
-          <br />
-          <span>
-            <a
-              data-toggle="modal"
-              data-target="#password"
-              title="Edit password"
-            >
-              Edit password
-            </a>
-          </span>
+          <div className="profile-item">
+            Username: <span className="p-font">{this.state.user.username}</span>
+            <div className="action-b">
+              <a
+                data-toggle="modal"
+                data-target="#username"
+                title="Edit username"
+                className="icon-link-b"
+              >
+                <span className="fa fa-edit " />
+              </a>
+            </div>
+          </div>
+
+          <div className="profile-item">
+            Email: <span className="p-font">{this.state.user.email}</span>
+            <div className="action-b">
+              <a
+                data-toggle="modal"
+                data-target="#email"
+                title="Edit email"
+                className="icon-link-b"
+              >
+                <span className="fa fa-edit " />
+              </a>
+            </div>
+          </div>
+
+          <div className="profile-item">
+            <div className="p-manage">
+              <a
+                data-toggle="modal"
+                data-target="#password"
+                title="Edit password"
+                className="edit-p"
+              >
+                Edit password
+              </a>
+            </div>
+            <div className="p-manage">
+              <a
+                onClick={this.DeleteClickHandler}
+                title="Edit password"
+                className="delete-p"
+              >
+                Delete account
+              </a>
+            </div>
+          </div>
         </div>
       );
     }
@@ -253,19 +328,24 @@ class Profile extends Component {
         <NavDash />
         <ToastContainer hideProgressBar={true} />
         <div className="profile col-lg-6 col-lg-offset-3 col-md-8 col-sm-10 col-xs-12">
-          <div className="panel panel-info profile-panel">
-            <div className="panel-heading">My Profile</div>
-            <div className="panel-body">{load}</div>
+          <div className="panel profile-panel">
+            <div className="panel-heading profile-head">
+              My Profile{" "}
+              <span className="b-home">
+                <a href="/dashboard">back</a>
+              </span>
+            </div>
+            <div className="panel-body profile-body">{load}</div>
           </div>
         </div>
 
         <div className="modal fade" id="username" role="dialog">
           <div className="modal-dialog">
-            <div className="modal-content">
+            <div className="modal-content mdl">
               <div className="modal-header">
-                <button type="button" className="close" data-dismiss="modal">
+                <a className="close" data-dismiss="modal">
                   &times;
-                </button>
+                </a>
                 <h4 className="modal-title">Edit {this.state.user.username}</h4>
               </div>
               <div className="modal-body">
@@ -273,14 +353,13 @@ class Profile extends Component {
                   className="form"
                   onSubmit={evt => this.handleSubmit("username", evt)}
                 >
+                  <label className="f-label">
+                    username:
+                    <span className="text-err">
+                      {this.state.errors.username}
+                    </span>
+                  </label>
                   <div className="input-group">
-                    <label className="f-label">
-                      {" "}
-                      name:{" "}
-                      <span className="text-err">
-                        {this.state.errors.username}
-                      </span>
-                    </label>
                     <input
                       type="text"
                       name="username"
@@ -308,11 +387,11 @@ class Profile extends Component {
 
         <div className="modal fade" id="email" role="dialog">
           <div className="modal-dialog">
-            <div className="modal-content">
+            <div className="modal-content mdl">
               <div className="modal-header">
-                <button type="button" className="close" data-dismiss="modal">
+                <a className="close" data-dismiss="modal">
                   &times;
-                </button>
+                </a>
                 <h4 className="modal-title">Edit {this.state.user.email}</h4>
               </div>
               <div className="modal-body">
@@ -320,14 +399,11 @@ class Profile extends Component {
                   className="form"
                   onSubmit={evt => this.handleSubmit("email", evt)}
                 >
+                  <label className="f-label">
+                    email:
+                    <span className="text-err">{this.state.errors.email}</span>
+                  </label>
                   <div className="input-group">
-                    <label className="f-label">
-                      {" "}
-                      email:{" "}
-                      <span className="text-err">
-                        {this.state.errors.email}
-                      </span>
-                    </label>
                     <input
                       type="email"
                       name="email"
@@ -355,11 +431,11 @@ class Profile extends Component {
 
         <div className="modal fade" id="password" role="dialog">
           <div className="modal-dialog">
-            <div className="modal-content">
+            <div className="modal-content mdl">
               <div className="modal-header">
-                <button type="button" className="close" data-dismiss="modal">
+                <a className="close" data-dismiss="modal">
                   &times;
-                </button>
+                </a>
                 <h4 className="modal-title">Edit {this.state.user.username}</h4>
               </div>
               <div className="modal-body">
@@ -390,8 +466,7 @@ class Profile extends Component {
                     />
                     <br />
                     <label className="f-label">
-                      {" "}
-                      Confirm new password:{" "}
+                      Confirm new password:
                       <span className="text-err">
                         {this.state.errors.cpassword}
                       </span>
