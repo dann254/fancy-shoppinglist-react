@@ -1,8 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
-import { Redirect } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.min.css";
+import { toast } from "react-toastify";
 import { confirmAlert } from "react-confirm-alert";
 import "react-confirm-alert/src/react-confirm-alert.css";
 import * as api from "./API_URLS";
@@ -187,8 +185,9 @@ class Buddies extends Component {
   };
   render() {
     // show spinner while buddies are still loading. else show invite if there are no buddies. else show buddies.
+    var resp = "";
     if (!this.state.buddies[0] && !this.state.success) {
-      var resp = (
+      resp = (
         <div className="spanel-item-loading-b">
           <h4>Loading</h4>
           <div className="text-right spn-b">
@@ -197,13 +196,13 @@ class Buddies extends Component {
         </div>
       );
     } else if (!this.state.buddies[0] && this.state.success) {
-      var resp = (
+      resp = (
         <div className="spanel-item-none">
           <h4>Invite your buddies</h4>
         </div>
       );
     } else {
-      var resp = this.state.buddies.map(buddy => {
+      resp = this.state.buddies.map(buddy => {
         return (
           <div className="spanel-item-b" key={buddy.friend_id}>
             <a data-toggle="modal" data-target={"#myModal" + buddy.friend_id}>

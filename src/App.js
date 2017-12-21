@@ -17,9 +17,9 @@ import "./App.css";
 class App extends Component {
   render() {
     return (
+      // urls
       <div className="null">
         <Switch>
-          // urls
           <Route exact={true} path="/" component={Home} />
           <Route path="/register/" component={Register} />
           <Route path="/login/" component={Login} />

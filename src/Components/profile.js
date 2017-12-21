@@ -148,16 +148,16 @@ class Profile extends Component {
       if (this.state.errors.username !== "") {
         toast.error("Please enter a valid username");
       } else {
-        var data = { username: this.state.username };
-        this.sendRequest(data);
+        var udata = { username: this.state.username };
+        this.sendRequest(udata);
       }
     }
     if (identifier === "email") {
       if (this.state.errors.email !== "") {
         toast.error("Please entera valod email");
       } else {
-        var data = { email: this.state.email };
-        this.sendRequest(data);
+        var edata = { email: this.state.email };
+        this.sendRequest(edata);
       }
     }
     if (identifier === "password") {
@@ -167,11 +167,11 @@ class Profile extends Component {
       ) {
         toast.error("Please enter valid values to change password");
       } else {
-        var data = {
+        var pdata = {
           password: this.state.password,
           new_password: this.state.cpassword
         };
-        this.sendRequest(data);
+        this.sendRequest(pdata);
       }
     }
   };
@@ -259,8 +259,9 @@ class Profile extends Component {
         />
       );
     }
+    var load = "";
     if (!this.state.user.username && !this.state.success) {
-      var load = (
+      load = (
         <div className="spanel-item-loading">
           <h4>Loading</h4>
           <div className="text-right spn">
@@ -269,7 +270,7 @@ class Profile extends Component {
         </div>
       );
     } else {
-      var load = (
+      load = (
         <div>
           <div className="profile-item">
             Username: <span className="p-font">{this.state.user.username}</span>

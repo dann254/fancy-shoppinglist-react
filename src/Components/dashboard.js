@@ -1,7 +1,5 @@
 import React, { Component } from "react";
 import NavDash from "./NavDash";
-import axios from "axios";
-import { Redirect } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
 import Buddies from "./Buddies";

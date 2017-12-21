@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.min.css";
+import { toast } from "react-toastify";
 import ShoppinglistView from "./shoppinglist_view";
 import * as api from "./API_URLS";
 
@@ -91,8 +90,12 @@ class Shoppinglists extends Component {
     }
     if (fields.paginateLimit) {
       var plm = fields.paginateLimit;
-      var re = /^[0-9]+$/;
-      if (!plm.match(re)) {
+      var re2 = /^[0-9]+$/;
+      if (!plm.match(re2)) {
+        errors = "invalid";
+        return errors;
+      }
+      if (plm <= 0) {
         errors = "invalid";
         return errors;
       }
@@ -174,7 +177,7 @@ class Shoppinglists extends Component {
 
         return response.data;
       })
-      .catch(function(error) {
+      .catch(error => {
         if (error.response) {
           this.setState({
             shoppinglists: [],
@@ -205,12 +208,13 @@ class Shoppinglists extends Component {
   };
   // render shoppinglists appropriately
   render() {
+    var load = "";
     if (
       !this.state.shoppinglists[0] &&
       !this.state.success &&
       this.state.message === "you dont have any shoppinglists with that name"
     ) {
-      var load = (
+      load = (
         <div className="spanel-item-none">
           <h4>You dont have any shoppinglists with that name</h4>
         </div>
@@ -221,13 +225,13 @@ class Shoppinglists extends Component {
           Click here to add <span className="fa fa-hand-o-right"> </span>{" "}
         </span>
       );
-      var load = (
+      load = (
         <div className="spanel-item-none">
           <h4>You dont have any shoppinglists</h4>
         </div>
       );
     } else if (!this.state.shoppinglists[0] && !this.state.success) {
-      var load = (
+      load = (
         <div className="spanel-item-loading">
           <h4>Loading</h4>
           <div className="text-right spn">
@@ -236,7 +240,7 @@ class Shoppinglists extends Component {
         </div>
       );
     } else {
-      var load = (
+      load = (
         <ShoppinglistView
           shoppinglists={this.state.shoppinglists}
           shandler={this.ShoppinglistHandler}
@@ -244,10 +248,11 @@ class Shoppinglists extends Component {
       );
     }
 
+    var buttons = "";
     if (!this.state.links) {
-      var buttons = <span />;
+      buttons = <span />;
     } else if (this.state.links.next && !this.state.links.previous) {
-      var buttons = (
+      buttons = (
         <button
           type="button"
           onClick={evt => this.handlePg(this.state.links.next, evt)}
@@ -256,7 +261,7 @@ class Shoppinglists extends Component {
         </button>
       );
     } else if (this.state.links.next && this.state.links.previous) {
-      var buttons = (
+      buttons = (
         <span>
           <button
             type="button"
@@ -273,7 +278,7 @@ class Shoppinglists extends Component {
         </span>
       );
     } else if (!this.state.links.next && this.state.links.previous) {
-      var buttons = (
+      buttons = (
         <span>
           <button
             type="button"
@@ -284,7 +289,7 @@ class Shoppinglists extends Component {
         </span>
       );
     } else {
-      var buttons = <span />;
+      buttons = <span />;
     }
     return (
       <div className="">
