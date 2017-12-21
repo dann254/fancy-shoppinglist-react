@@ -57,8 +57,9 @@ class BuddyItems extends Component {
   };
   // render items
   render() {
+    var load = "";
     if (!this.state.items[0] && this.state.success === true) {
-      var load = (
+      load = (
         <tbody>
           <tr>
             <td className="item-none" colSpan="4">
@@ -80,7 +81,7 @@ class BuddyItems extends Component {
         </div>
       );
     } else {
-      var load = (
+      load = (
         <BuddyItemView
           items={this.state.items}
           sid={this.props.match.params.id}

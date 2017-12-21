@@ -63,9 +63,9 @@ class Items extends Component {
     if (fields.price) {
       var price = fields.price;
       // Regular expression to validate price
-      var re = /^[0-9]+$/;
-      var re2 = /^[0-9]+[.]+[0-9]+$/;
-      if (!price.match(re) && !price.match(re2)) {
+      var re3 = /^[0-9]+$/;
+      var re23 = /^[0-9]+[.]+[0-9]+$/;
+      if (!price.match(re3) && !price.match(re23)) {
         errors = "invalid value";
         return errors;
       }
@@ -73,9 +73,9 @@ class Items extends Component {
     if (fields.quantity) {
       var qty = fields.quantity;
       // Regular expression to validate quantity
-      var re = /^[0-9]+$/;
-      var re2 = /^[0-9]+[.]+[0-9]+$/;
-      if (!qty.match(re) && !qty.match(re2)) {
+      var re4 = /^[0-9]+$/;
+      var re24 = /^[0-9]+[.]+[0-9]+$/;
+      if (!qty.match(re4) && !qty.match(re24)) {
         errors = "invalid value";
         return errors;
       }
@@ -225,8 +225,9 @@ class Items extends Component {
 
   // render items
   render() {
+    var load = "";
     if (!this.state.items[0] && this.state.success === true) {
-      var load = (
+      load = (
         <tbody>
           <tr>
             <td className="item-none" colSpan="4">
@@ -248,7 +249,7 @@ class Items extends Component {
         </div>
       );
     } else {
-      var load = (
+      load = (
         <ItemView
           items={this.state.items}
           ItemHandler={this.ItemHandler}

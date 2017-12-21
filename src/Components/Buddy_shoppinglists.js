@@ -1,7 +1,5 @@
 import React, { Component } from "react";
 import axios from "axios";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.min.css";
 import * as api from "./API_URLS";
 
 class BuddyShoppinglists extends Component {
@@ -55,14 +53,15 @@ class BuddyShoppinglists extends Component {
       this.getBuddyShoppinglists();
     }
     // SHow loading when the component hasnt mounted. and handle shoppinglist states appropriately
+    var resp = "";
     if (this.state.message !== "") {
-      var resp = (
+      resp = (
         <div className="spanel-item-none">
           <h4>{this.state.message}</h4>
         </div>
       );
     } else if (!this.state.buddyshoppinglists[0] && !this.state.success) {
-      var resp = (
+      resp = (
         <div className="spanel-item-loading">
           <h4>Loading</h4>
           <div className="text-right spn">
@@ -71,7 +70,7 @@ class BuddyShoppinglists extends Component {
         </div>
       );
     } else {
-      var resp = this.state.buddyshoppinglists.map(bslist => {
+      resp = this.state.buddyshoppinglists.map(bslist => {
         return (
           <div className="spanel-item-bs" key={bslist.id}>
             <a href={"/dashboard/buddy_shoppinglist/" + bslist.id}>

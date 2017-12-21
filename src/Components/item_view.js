@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.min.css";
+import { toast } from "react-toastify";
 import { confirmAlert } from "react-confirm-alert";
 import "react-confirm-alert/src/react-confirm-alert.css";
 import * as api from "./API_URLS";
@@ -13,7 +12,6 @@ class ItemView extends Component {
       errors: { sitem: "", price: "", quantity: "" },
       items: [],
       success: false,
-      errors: "",
       sitem: "",
       price: "",
       quantity: ""
@@ -62,9 +60,9 @@ class ItemView extends Component {
     if (fields.price) {
       var price = fields.price;
       // Regular expression to validate price
-      var re = /^[0-9]+$/;
+      var re3 = /^[0-9]+$/;
       var re2 = /^[0-9]+[.]+[0-9]+$/;
-      if (!price.match(re) && !price.match(re2)) {
+      if (!price.match(re3) && !price.match(re2)) {
         errors = "invalid value";
         return errors;
       }
@@ -72,9 +70,9 @@ class ItemView extends Component {
     if (fields.quantity) {
       var qty = fields.quantity;
       // Regular expression to validate quantity
-      var re = /^[0-9]+$/;
-      var re2 = /^[0-9]+[.]+[0-9]+$/;
-      if (!qty.match(re) && !qty.match(re2)) {
+      var re4 = /^[0-9]+$/;
+      var re24 = /^[0-9]+[.]+[0-9]+$/;
+      if (!qty.match(re4) && !qty.match(re24)) {
         errors = "invalid value";
         return errors;
       }
