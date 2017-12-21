@@ -10,3 +10,6 @@ export const forgotEp = rootURL + "auth/forgot_password";
 export const resetEp = rootURL + "auth/reset_password/";
 export const verifyEp = rootURL + "verify/";
 export const userEp = rootURL + "user/";
+export const buddiesEP = rootURL + "buddies/";
+export const buddiesListEP = rootURL + "buddies/shoppinglists/";
+export const shoppinglistsEP = rootURL + "shoppinglists/";
