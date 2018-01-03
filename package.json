@@ -4,7 +4,6 @@
   "private": true,
   "dependencies": {
     "axios": "^0.17.0",
-    "coveralls": "^3.0.0",
     "jest": "^20.0.4",
     "react": "^16.2.0",
     "react-confirm-alert": "^1.0.8",
@@ -24,7 +23,9 @@
     "coveralls": "cat ./coverage/lcov.info | node node_modules/.bin/coveralls"
   },
   "devDependencies": {
+    "coveralls": "^3.0.0",
     "enzyme": "^3.3.0",
-    "enzyme-adapter-react-16": "^1.1.1"
+    "enzyme-adapter-react-16": "^1.1.1",
+    "moxios": "^0.4.0"
   }
 }
