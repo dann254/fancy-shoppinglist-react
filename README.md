@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/dann254/fancy-shoppinglist-react.svg?branch=master)](https://travis-ci.org/dann254/fancy-shoppinglist-react)
+[![Build Status](https://travis-ci.org/dann254/fancy-shoppinglist-react.svg)](https://travis-ci.org/dann254/fancy-shoppinglist-react)
 [![Coverage Status](https://coveralls.io/repos/github/dann254/fancy-shoppinglist-react/badge.svg?branch=master)](https://coveralls.io/github/dann254/fancy-shoppinglist-react?branch=master)
 
 # fancy-shoppinglist-react
