@@ -39,4 +39,16 @@ describe("Mocking login token and status validation request ", () => {
       done();
     });
   });
+  it("State does not change when user is not verified", done => {
+    const navComponent = mount(<NavHome />);
+    navComponent.instance().getUser();
+    moxios.stubRequest(api.userEp, {
+      status: 401
+    });
+    moxios.wait(function() {
+      // Expect state of isLoading changes
+      expect(navComponent.instance().state.logged_in).toBe(false);
+      done();
+    });
+  });
 });
