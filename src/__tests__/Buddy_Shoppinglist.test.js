@@ -2,7 +2,7 @@ import React from "react";
 import { shallow, mount, render } from "enzyme";
 import { Redirect } from "react-router-dom";
 import ReactDOM from "react-dom";
-import BuddyShoppinglists from "../Components/Buddy_Shoppinglists";
+import BuddyShoppinglists from "../Components/Buddy_shoppinglists";
 import moxios from "moxios";
 import sinon from "sinon";
 import * as api from "../Components/API_URLS";
