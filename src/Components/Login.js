@@ -104,7 +104,10 @@ class Login extends Component {
         toast.success(response.data.message);
         window.localStorage.setItem("token", response.data.access_token);
         window.localStorage.setItem("msg", response.data.message);
-        this.setState({ redirect: true, message: response.data.message });
+        this.setState({
+          redirect: true,
+          message: response.data.message
+        });
         return response.data;
       })
       .catch(error => {
