@@ -2,7 +2,7 @@ import React from "react";
 import { shallow, mount, render } from "enzyme";
 import ReactDOM from "react-dom";
 import { Redirect, Router } from "react-router-dom";
-import Dashboard from "../Components/Dashboard";
+import Dashboard from "../Components/dashboard";
 import * as api from "../Components/API_URLS";
 import sinon from "sinon";
 
