@@ -11,7 +11,7 @@ describe("Dashboard component test cases", () => {
     const dashComponent = shallow(<Dashboard />);
     expect(dashComponent).toHaveLength(1);
   });
-  describe("Mocking axios request to login ", () => {
+  describe("Mocking ", () => {
     beforeEach(function() {
       window.localStorage.setItem("msg", "success");
     });
