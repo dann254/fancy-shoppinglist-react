@@ -280,6 +280,7 @@ class Profile extends Component {
                 data-target="#username"
                 title="Edit username"
                 className="icon-link-b"
+                id="uname"
               >
                 <span className="fa fa-edit " />
               </a>
@@ -293,7 +294,7 @@ class Profile extends Component {
                 data-toggle="modal"
                 data-target="#email"
                 title="Edit email"
-                className="icon-link-b"
+                className="icon-link-b email-link"
               >
                 <span className="fa fa-edit " />
               </a>
