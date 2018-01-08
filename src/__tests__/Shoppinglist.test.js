@@ -63,8 +63,35 @@ describe("Buddies component test cases", () => {
     });
     expect(ShoppinglistsComponent.find(".spanel-item-none")).toHaveLength(1);
   });
+  it("Shows next button on pagination", () => {
+    ShoppinglistsComponent.setState({
+      links: { next: "/next/" }
+    });
+    expect(ShoppinglistsComponent.find("button")).toHaveLength(2);
+  });
+  it("Shows next and previous button on pagination", () => {
+    ShoppinglistsComponent.setState({
+      links: { next: "/next/", previous: "/previous/" }
+    });
+    expect(ShoppinglistsComponent.find("button")).toHaveLength(3);
+  });
+  it("Shows previous button on pagination", () => {
+    ShoppinglistsComponent.setState({
+      links: { previous: "/previous/" }
+    });
+    expect(ShoppinglistsComponent.find("button")).toHaveLength(2);
+  });
   it("Shows loading when request is not complete", () => {
     ShoppinglistsComponent.setState({ sucess: false, shoppinglists: [] });
     expect(ShoppinglistsComponent.find(".fa-spin")).toHaveLength(1);
   });
+
+  // it("calls get shoppinglist when next button is clicked", () => {
+  //   ShoppinglistsComponent.setState({
+  //     links: { next: "/next/" }
+  //   });
+  //   button = ShoppinglistsComponent.find("button").first();
+  //   button.simulate("click");
+  //   expect(handlePg.calledOnce).toEqual(true);
+  // });
 });
