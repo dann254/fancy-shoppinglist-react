@@ -44,12 +44,20 @@ describe("Buddies component test cases", () => {
     });
   });
 
-  // it("calls componentWillMount", () => {
-  //   const testMountCall = sinon.spy(
-  //     BuddyShoppinglists.prototype,
-  //     "componentWillMount"
-  //   );
-  //   const wrapper = shallow(<BuddyShoppinglists />);
-  //   expect(testMountCall.calledOnce).toEqual(true);
-  // });
+  it("Shows message when there are no shoppinglists", () => {
+    BuddyShoppinglistsComponent.setState({
+      message: "no shoppinglists",
+      success: true
+    });
+    expect(BuddyShoppinglistsComponent.find(".spanel-item-none")).toHaveLength(
+      1
+    );
+  });
+  it("Shows loading when request is not complete", () => {
+    BuddyShoppinglistsComponent.setState({
+      sucess: false,
+      buddyshoppinglists: []
+    });
+    expect(BuddyShoppinglistsComponent.find(".fa-spin")).toHaveLength(1);
+  });
 });

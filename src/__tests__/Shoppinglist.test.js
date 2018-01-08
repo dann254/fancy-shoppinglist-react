@@ -55,7 +55,7 @@ describe("Buddies component test cases", () => {
       done();
     });
   });
-  it("Shows no shoppinglist when there are no shoppinglists", () => {
+  it("Shows message when there are no shoppinglists", () => {
     ShoppinglistsComponent.setState({
       shoppinglists: [],
       success: false,
