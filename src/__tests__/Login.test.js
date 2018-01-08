@@ -69,36 +69,20 @@ describe("<Login/> components", () => {
       loginForm.simulate("submit", { preventDefault() {} });
       expect(login.state().redirect).toBe(false);
     });
-    // it("Calls sendRequest when form is submitted ", () => {
-    //   sinon.spy(Login.prototype, "handleSubmit");
-    //   const wrapper = shallow(<Login />);
-    //   wrapper.setState({ username: "sam", password: "sasasdsc4" });
-    //   const pageForm = wrapper.find("form");
-    //   pageForm.simulate("submit", { preventDefault() {} });
-    //   expect(Login.prototype.handleSubmit.calledOnce).toEqual(true);
-    // });
-    //   it("Calls handleSubmit when form is submitted ", () => {
-    //     sinon.spy(Login.prototype, "handelsubmit");
-    //     const wrapper = shallow(<Login />);
-    //     wrapper.setState({ email: "chris@gmail.com", password: "maina1234" });
-    //     const pageForm = wrapper.find("Form");
-    //     pageForm.simulate("submit", { preventDefault() {} });
-    //     expect(Login.prototype.handelsubmit.calledOnce).toEqual(true);
-    //   });
-    //   it("Changes email state when on change event is called", () => {
-    //     const login = shallow(<Login />);
-    //     const inputEmail = login.find("Input[name='email']");
-    //     const event = {
-    //       target: {
-    //         name: "email",
-    //         value: "chris@gmail.com"
-    //       },
-    //       preventDefault: () => {
-    //         return true;
-    //       }
-    //     };
-    //     inputEmail.simulate("change", event);
-    //     expect(login.state().email).toBe(event.target.value);
-    //   });
+    it("Changes email state when on change event is called", () => {
+      const login = shallow(<Login />);
+      const inputUsername = login.find("input[name='username']");
+      const event = {
+        target: {
+          name: "username",
+          value: "fan"
+        },
+        preventDefault: () => {
+          return true;
+        }
+      };
+      inputUsername.simulate("change", event);
+      expect(login.state().username).toBe("");
+    });
   });
 });

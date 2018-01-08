@@ -85,13 +85,4 @@ describe("Buddies component test cases", () => {
     ShoppinglistsComponent.setState({ sucess: false, shoppinglists: [] });
     expect(ShoppinglistsComponent.find(".fa-spin")).toHaveLength(1);
   });
-
-  // it("calls get shoppinglist when next button is clicked", () => {
-  //   ShoppinglistsComponent.setState({
-  //     links: { next: "/next/" }
-  //   });
-  //   button = ShoppinglistsComponent.find("button").first();
-  //   button.simulate("click");
-  //   expect(handlePg.calledOnce).toEqual(true);
-  // });
 });
