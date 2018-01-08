@@ -17,7 +17,8 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom --coverage",
+    "test":
+      "react-scripts test --env=jsdom --coverage --collectCoverageFrom=src/Components/*js",
     "eject": "react-scripts eject",
     "coveralls": "cat ./coverage/lcov.info | node node_modules/.bin/coveralls"
   },
