@@ -13,7 +13,7 @@ class VerifyEmail extends Component {
     this.state = { success: false, failure: false, message: "" };
   }
   // get token from URl
-  componentDidMount = () => {
+  componentWillMount = () => {
     this.emailVerify(this.props.match.params.token);
   };
 
