@@ -22,6 +22,6 @@ describe("Navigation component test cases", () => {
     navComponent.instance().logout();
     // navComponent.instance().getUser();
     expect(navComponent.state().failure).toBe(true);
-    expect(forgot.find(Redirect)).toHaveLength(1);
+    expect(navComponent.find(Redirect)).toHaveLength(1);
   });
 });

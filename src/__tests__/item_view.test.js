@@ -38,11 +38,6 @@ describe("sview component test cases", () => {
       done();
     });
   });
-  it("Returns error when the state is blank", () => {
-    SviewComponent.instance().handleSubmit(1);
-    expect(ShoppinglistsComponent.instance().state.editSuccess).toBe(true);
-    done();
-  });
   it("Changes state when shoppinglist deleted", () => {
     SviewComponent.instance().deleteRequest();
     moxios.stubRequest(parentUrl.url, {
