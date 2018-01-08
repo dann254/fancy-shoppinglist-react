@@ -17,4 +17,11 @@ describe("Navigation component test cases", () => {
     // navComponent.instance().getUser();
     expect(navComponent.state().failure).toBe(false);
   });
+  it("logs out successfully", () => {
+    const navComponent = shallow(<NavDash />);
+    navComponent.instance().logout();
+    // navComponent.instance().getUser();
+    expect(navComponent.state().failure).toBe(true);
+    expect(forgot.find(Redirect)).toHaveLength(1);
+  });
 });
