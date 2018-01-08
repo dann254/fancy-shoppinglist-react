@@ -51,42 +51,42 @@ describe("Buddies component test cases", () => {
     expect(testMountCall.calledOnce).toEqual(true);
   });
 
-  // it("Invites a buddy", done => {
-  //   BuddiesComponent.instance().handleInvite("sam");
-  //   moxios.stubRequest(parentUrl.url, {
-  //     status: 200,
-  //     response: []
-  //   });
-  //   moxios.wait(function() {
-  //     expect(BuddiesComponent.instance().state.success).toBe(true);
-  //     done();
-  //   });
-  // });
-  //
-  // it("uninvites a buddy", done => {
-  //   BuddiesComponent.instance().unfriendHandler(1);
-  //   moxios.stubRequest(parentUrl.url, {
-  //     status: 200
-  //   });
-  //   moxios.wait(function() {
-  //     expect(BuddiesComponent.find("ToastContainer").text()).toContain(
-  //       "Buddy unfriended!"
-  //     );
-  //     done();
-  //   });
-  // });
+  it("Invites a buddy", done => {
+    BuddiesComponent.instance().handleInvite("sam");
+    moxios.stubRequest(parentUrl.url, {
+      status: 200,
+      response: []
+    });
+    moxios.wait(function() {
+      expect(BuddiesComponent.instance().state.success).toBe(true);
+      done();
+    });
+  });
 
-  // it("Returns error when response fails", done => {
-  //   BuddiesComponent.instance().handleInvite("sam");
-  //   moxios.stubRequest(parentUrl.url, {
-  //     status: 401,
-  //     response: { message: "friend not added: User does not exist." }
-  //   });
-  //   moxios.wait(function() {
-  //     expect(BuddiesComponent.find("ToastContainer").text()).toContain(
-  //       "friend not added: User does not exist."
-  //     );
-  //     done();
-  //   });
-  // });
+  it("uninvites a buddy", () => {
+    BuddiesComponent.instance().unfriendHandler(1);
+    moxios.stubRequest(parentUrl.url, {
+      status: 200
+    });
+    moxios.wait(function() {
+      expect(BuddiesComponent.find("ToastContainer").text()).toContain(
+        "Buddy unfriended!"
+      );
+      done();
+    });
+  });
+
+  it("Returns error when response fails", () => {
+    BuddiesComponent.instance().handleInvite("sam");
+    moxios.stubRequest(parentUrl.url, {
+      status: 401,
+      response: { message: "friend not added: User does not exist." }
+    });
+    moxios.wait(function() {
+      expect(BuddiesComponent.find("ToastContainer").text()).toContain(
+        "friend not added: User does not exist."
+      );
+      done();
+    });
+  });
 });
