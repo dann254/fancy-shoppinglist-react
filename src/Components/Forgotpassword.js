@@ -16,7 +16,7 @@ class ForgotPassword extends Component {
       submitted: false
     };
   }
-  // handle user input
+  // handle user input and save to state while validating
   onInputChange = evt => {
     evt.preventDefault();
     let fields = {};
@@ -34,7 +34,7 @@ class ForgotPassword extends Component {
     }
   };
 
-  // validate user inpur
+  // validate user input
   validate = fields => {
     var errors = "";
     if (fields.email) {
@@ -71,6 +71,7 @@ class ForgotPassword extends Component {
   sendRequest = email => {
     var data = { email: email };
     const url = api.forgotEp;
+    // Send post request
     axios({
       method: "post",
       url: url,
@@ -80,6 +81,7 @@ class ForgotPassword extends Component {
       data: data
     })
       .then(response => {
+        // Redsolve response
         if (!response.statusText === "OK") {
           console.log(response.data.message);
         }

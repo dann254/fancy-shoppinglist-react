@@ -1,5 +1,5 @@
 [![Build Status](https://travis-ci.org/dann254/fancy-shoppinglist-react.svg)](https://travis-ci.org/dann254/fancy-shoppinglist-react)
-[![Coverage Status](https://coveralls.io/repos/github/dann254/fancy-shoppinglist-react/badge.svg?branch=master)](https://coveralls.io/github/dann254/fancy-shoppinglist-react?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/dann254/fancy-shoppinglist-react/badge.svg)](https://coveralls.io/github/dann254/fancy-shoppinglist-react)
 
 # fancy-shoppinglist-react
 
@@ -15,3 +15,8 @@ Below you will find some information on how to perform common tasks. [here](http
 1. Clone this repository: `https://github.com/dann254/fancy-shoppinglist-react`
 2. Install Dependency: `npm install`
 3. Run the application: `npm start`
+
+## Live application
+
+[Fancy Shoppinglist](http://fancy-shoppinglist.herokuapp.com/)
+

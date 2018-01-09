@@ -364,7 +364,7 @@ class Shoppinglists extends Component {
                       className={
                         this.state.errors.sname
                           ? "form-control f-error"
-                          : "form-control"
+                          : "form-control sname"
                       }
                       onInput={this.onInputChange}
                       value={this.state.sname}

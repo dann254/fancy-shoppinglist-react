@@ -24,6 +24,7 @@ class BuddyShoppinglists extends Component {
       }
     })
       .then(response => {
+        // Resolve response and update state
         if (!response.statusText === "OK") {
           console.log(response.data.message);
         }
@@ -35,6 +36,7 @@ class BuddyShoppinglists extends Component {
         return response.data;
       })
       .catch(error => {
+        // Catch and log any errors from the response
         if (error.response) {
           console.log(error.response.data.message);
           this.setState({
@@ -49,10 +51,11 @@ class BuddyShoppinglists extends Component {
       });
   };
   render() {
+    // Refresh When Buddies are updated
     if (this.props.refresh === true) {
       this.getBuddyShoppinglists();
     }
-    // SHow loading when the component hasnt mounted. and handle shoppinglist states appropriately
+    // SShow message when there are no shoppinglists shared with th user.
     var resp = "";
     if (this.state.message !== "") {
       resp = (
@@ -61,6 +64,7 @@ class BuddyShoppinglists extends Component {
         </div>
       );
     } else if (!this.state.buddyshoppinglists[0] && !this.state.success) {
+      // SHow loading when the component hasnt mounted
       resp = (
         <div className="spanel-item-loading">
           <h4>Loading</h4>
@@ -70,6 +74,7 @@ class BuddyShoppinglists extends Component {
         </div>
       );
     } else {
+      // Display all the shoppinglists shared with user appropriately
       resp = this.state.buddyshoppinglists.map(bslist => {
         return (
           <div className="spanel-item-bs" key={bslist.id}>
@@ -92,7 +97,6 @@ class BuddyShoppinglists extends Component {
         );
       });
     }
-    // render the buddy shoppinglist panel
     return (
       <div className="">
         <div className="row bslist col-lg-5 col-md-5 col-sm-12 col-xs-12">

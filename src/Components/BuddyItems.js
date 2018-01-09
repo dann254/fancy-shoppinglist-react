@@ -7,6 +7,7 @@ import BuddyItemView from "./buddy_item_view";
 import * as api from "./API_URLS";
 
 class BuddyItems extends Component {
+  // Initialize props
   constructor(props) {
     super(props);
     this.state = {
@@ -32,6 +33,7 @@ class BuddyItems extends Component {
       }
     })
       .then(response => {
+        //Resolve the api response and update state
         if (!response.statusText === "OK") {
           console.log(response.data.message);
         }
@@ -44,6 +46,7 @@ class BuddyItems extends Component {
         return response.data;
       })
       .catch(error => {
+        // Catch and log any errors
         if (error.response) {
           toast.error(error.response.data.message);
           this.setState({ success: true });
@@ -59,6 +62,7 @@ class BuddyItems extends Component {
   render() {
     var load = "";
     if (!this.state.items[0] && this.state.success === true) {
+      // Show message when there are sno items
       load = (
         <tbody>
           <tr>
@@ -70,6 +74,7 @@ class BuddyItems extends Component {
       );
     } else if (!this.state.items[0] && !this.state.success) {
       return (
+        // Show loading when request is not complete
         <div>
           <NavDash />
           <div className="item-loading">
@@ -81,6 +86,7 @@ class BuddyItems extends Component {
         </div>
       );
     } else {
+      // pass props to Buddy items view component for rendering
       load = (
         <BuddyItemView
           items={this.state.items}

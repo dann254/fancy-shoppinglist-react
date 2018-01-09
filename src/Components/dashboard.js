@@ -30,6 +30,7 @@ class Dashboard extends Component {
       }
     } catch (e) {}
   }
+  // reload buddy shoppinglists
   buddyShoppinglists = () => {
     this.setState({ rerender: true });
     this.setState({
