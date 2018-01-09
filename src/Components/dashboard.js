@@ -30,6 +30,7 @@ class Dashboard extends Component {
       }
     } catch (e) {}
   }
+  // reload buddy shoppinglists
   buddyShoppinglists = () => {
     this.setState({ rerender: true });
     this.setState({
@@ -43,6 +44,7 @@ class Dashboard extends Component {
     }
     return (
       <div className="">
+        // Render dashboard container
         <ToastContainer hideProgressBar={true} />
         <NavDash />
         <div className="container custom_content">

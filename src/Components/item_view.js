@@ -6,6 +6,7 @@ import "react-confirm-alert/src/react-confirm-alert.css";
 import * as api from "./API_URLS";
 
 class ItemView extends Component {
+  // Intitialize state
   constructor(props) {
     super(props);
     this.state = {
@@ -18,7 +19,7 @@ class ItemView extends Component {
     };
   }
 
-  // handle user input
+  // handle user input and save to sttate after validating
   onInputChange = evt => {
     evt.preventDefault();
     let fields = {};
@@ -109,6 +110,7 @@ class ItemView extends Component {
   sendEditRequest(sitem, price, quantity, id, itemId) {
     var data = { name: sitem, price: price, quantity: quantity };
     const url = api.shoppinglistsEP + id + "/items/" + itemId;
+    // Send put request to edit item
     axios({
       method: "put",
       url: url,
@@ -118,6 +120,7 @@ class ItemView extends Component {
       data: data
     })
       .then(response => {
+        // Handle response and update state
         if (!response.statusText === "OK") {
           console.log(response.data.message);
         }
@@ -134,6 +137,7 @@ class ItemView extends Component {
       })
       .catch(error => {
         if (error.response) {
+          // Catch and resolve errors
           toast.error(error.response.data.message);
         } else if (error.request) {
           // No response received
@@ -170,6 +174,7 @@ class ItemView extends Component {
       }
     })
       .then(response => {
+        // Resolve response and UPdate state
         if (!response.statusText === "OK") {
           console.log(response.data.message);
         }
@@ -178,6 +183,7 @@ class ItemView extends Component {
         return response.data;
       })
       .catch(function(error) {
+        // Catch and log errors
         if (error.response) {
           toast.error(error.response.data.message);
         } else if (error.request) {
@@ -190,6 +196,7 @@ class ItemView extends Component {
   };
   reset = () => {
     this.setState({
+      // Reset state to default values
       errors: { sitem: "", price: "", quantity: "" },
       sitem: "",
       price: "",

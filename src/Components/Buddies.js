@@ -17,7 +17,7 @@ class Buddies extends Component {
     };
   }
 
-  // handle user input
+  // handle user input and immeadiately validate them while saving to state
   onInputChange = evt => {
     evt.preventDefault();
     let fields = {};
@@ -36,7 +36,7 @@ class Buddies extends Component {
     }
   };
 
-  // validate user input
+  // validate user input based on input field
   validate = fields => {
     var errors = "";
     // username validation
@@ -64,7 +64,7 @@ class Buddies extends Component {
     this.getBuddies();
   }
 
-  // handle form submission
+  // handle form submission for buddy invite
   handleSubmit = e => {
     e.preventDefault();
     this.handleInvite(this.state.username);
@@ -74,6 +74,7 @@ class Buddies extends Component {
   handleInvite = username => {
     var data = { username: username };
     const url = api.buddiesEP;
+    // Send a post request using axios
     axios({
       method: "post",
       url: url,
@@ -83,6 +84,7 @@ class Buddies extends Component {
       data: data
     })
       .then(response => {
+        // resolve axios response and update state
         if (!response.statusText === "OK") {
           console.log(response.data.message);
         }
@@ -95,6 +97,7 @@ class Buddies extends Component {
         return response.data;
       })
       .catch(error => {
+        // catch and log any errors from the request
         if (error.response) {
           toast.error(error.response.data.message);
         } else if (error.request) {
@@ -120,6 +123,7 @@ class Buddies extends Component {
   // send and resolve unfriend request.
   unfriendHandler = id => {
     const url = api.buddiesEP + id;
+    // Send delete request to unfriend
     axios({
       method: "delete",
       url: url,
@@ -128,6 +132,7 @@ class Buddies extends Component {
       }
     })
       .then(response => {
+        // Resovle response
         if (!response.statusText === "OK") {
           console.log(response.data.message);
         }
@@ -139,6 +144,7 @@ class Buddies extends Component {
         return response.data;
       })
       .catch(error => {
+        // catch any errors from the request and log
         if (error.response) {
           toast.error(error.response.data.message);
         } else if (error.request) {
@@ -162,6 +168,7 @@ class Buddies extends Component {
       }
     })
       .then(response => {
+        // Resolve response and update states
         if (!response.statusText === "OK") {
           console.log(response.data.message);
         }
@@ -173,6 +180,7 @@ class Buddies extends Component {
         return response.data;
       })
       .catch(error => {
+        // catch an log any errors in the response
         if (error.response) {
           toast.error(error.response.data.message);
         } else if (error.request) {
@@ -196,6 +204,7 @@ class Buddies extends Component {
         </div>
       );
     } else if (!this.state.buddies[0] && this.state.success) {
+      // Show message when the user has no buddies
       resp = (
         <div className="spanel-item-none">
           <h4>Invite your buddies</h4>
@@ -203,12 +212,14 @@ class Buddies extends Component {
       );
     } else {
       resp = this.state.buddies.map(buddy => {
+        // Display all the buddies the user has.
         return (
           <div className="spanel-item-b" key={buddy.friend_id}>
             <a data-toggle="modal" data-target={"#myModal" + buddy.friend_id}>
               <h4>{buddy.username}</h4>
             </a>{" "}
             <div className="action-b">
+              // Button to unfriand buddy,
               <a
                 className="icon-link-b"
                 onClick={e =>
@@ -218,6 +229,7 @@ class Buddies extends Component {
                 <span className="fa fa-times-circle-o" title="Unfriend" />
               </a>
             </div>
+            // Modal to show buddy details
             <div
               className="modal fade"
               id={"myModal" + buddy.friend_id}
@@ -272,6 +284,7 @@ class Buddies extends Component {
             </div>
           </div>
         </div>
+        // Render the modal for adding a user
         <div id="myModaluser" className="modal fade" role="dialog">
           <div className="modal-dialog">
             <div className="modal-content mdl">
