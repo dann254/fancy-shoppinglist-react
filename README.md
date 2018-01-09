@@ -15,3 +15,8 @@ Below you will find some information on how to perform common tasks. [here](http
 1. Clone this repository: `https://github.com/dann254/fancy-shoppinglist-react`
 2. Install Dependency: `npm install`
 3. Run the application: `npm start`
+
+## Live application
+
+[Fancy Shoppinglist](http://fancy-shoppinglist.herokuapp.com/)
+
