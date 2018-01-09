@@ -6,7 +6,6 @@ class Home extends Component {
   render() {
     return (
       <div className="Home">
-        // Render landing page
         <NavHome />
         <div className="col-lg-12 text-center custom-content">
           <h1 className="landing-head">

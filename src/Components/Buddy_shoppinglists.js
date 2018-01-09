@@ -97,7 +97,6 @@ class BuddyShoppinglists extends Component {
         );
       });
     }
-    // render the buddy shoppinglist panel
     return (
       <div className="">
         <div className="row bslist col-lg-5 col-md-5 col-sm-12 col-xs-12">

@@ -219,7 +219,6 @@ class Buddies extends Component {
               <h4>{buddy.username}</h4>
             </a>{" "}
             <div className="action-b">
-              // Button to unfriand buddy,
               <a
                 className="icon-link-b"
                 onClick={e =>
@@ -229,7 +228,6 @@ class Buddies extends Component {
                 <span className="fa fa-times-circle-o" title="Unfriend" />
               </a>
             </div>
-            // Modal to show buddy details
             <div
               className="modal fade"
               id={"myModal" + buddy.friend_id}
@@ -284,7 +282,6 @@ class Buddies extends Component {
             </div>
           </div>
         </div>
-        // Render the modal for adding a user
         <div id="myModaluser" className="modal fade" role="dialog">
           <div className="modal-dialog">
             <div className="modal-content mdl">

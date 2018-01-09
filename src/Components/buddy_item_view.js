@@ -5,7 +5,6 @@ class ItemView extends Component {
   render() {
     return (
       <tbody>
-        // loop through the props to display each item
         {this.props.items.map(items => {
           return (
             <tr key={items.id}>

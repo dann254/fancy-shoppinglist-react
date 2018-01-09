@@ -96,7 +96,6 @@ class BuddyItems extends Component {
     }
     return (
       <div className="items">
-        // Display the items panel
         <NavDash />
         <ToastContainer hideProgressBar={true} />
         <div className="s-heading-s">

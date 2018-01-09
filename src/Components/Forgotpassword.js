@@ -146,7 +146,6 @@ class ForgotPassword extends Component {
     return (
       <div className="">
         <NavHome />
-        // Render forgot password page.
         <ToastContainer hideProgressBar={true} />
         <h3 className="f-head text-center">
           please enter your email adress to recieve reset password link

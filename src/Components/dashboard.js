@@ -44,7 +44,6 @@ class Dashboard extends Component {
     }
     return (
       <div className="">
-        // Render dashboard container
         <ToastContainer hideProgressBar={true} />
         <NavDash />
         <div className="container custom_content">
